@@ -1,8 +1,10 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic');
 // Variables
-@import 'variables';
-
+// @import 'variables';
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+// AdminLTE
+@import url('../../public/vendor/fontawesome-free/css/all.min.css');
+@import url('../../public/vendor/overlayScrollbars/css/OverlayScrollbars.min.css');
+@import url('../../public/vendor/adminlte/dist/css/adminlte.min.css');

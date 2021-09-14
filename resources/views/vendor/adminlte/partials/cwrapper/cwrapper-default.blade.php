@@ -20,7 +20,7 @@
 
     {{-- Main Content --}}
     <div class="content">
-        <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
+        <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}" id="app">
             @yield('content')
         </div>
     </div>
