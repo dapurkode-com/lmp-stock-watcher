@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\UsStockEvent;
+use App\Models\WatchlistStockUs;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        WatchlistStockUs::created(function ($stock) {
+            event(new UsStockEvent($stock));
+        });
+
+        WatchlistStockUs::updated(function ($stock) {
+            event(new UsStockEvent($stock));
+        });
     }
 }

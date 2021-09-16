@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('us-stock-list', [\App\Http\Controllers\Api\StockUsController::class, 'index']);
+});

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use GuzzleHttp\Client;
+use App\Events\UsStockEvent;
 use Illuminate\Console\Command;
 use App\Models\WatchlistStockUs;
 

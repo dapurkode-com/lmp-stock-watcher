@@ -1,0 +1,99 @@
+<template>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-xs-12">
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Watchlist</h3></div>
+
+                    <div class="card-body p-0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Symbol</th>
+                                    <th>Name</th>
+                                    <th>Prev</th>
+                                    <th>Curr</th>
+                                    <th>Chng</th>
+                                    <th>Chng %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="stocks.length == 0">
+                                    <td colspan="7" class="text-center">No Data</td>
+                                </tr>
+                                <tr v-for="(stock, index) in sortedStocks" :key="stock.id">
+                                    <td>{{ ++index }}</td>
+                                    <th>{{ stock.symbol }}</th>
+                                    <td>{{ stock.name }}</td>
+                                    <td>{{ stock.prev_price }}</td>
+                                    <td>{{ stock.current_price }}</td>
+                                    <td>{{ stock.change }}</td>
+                                    <td><span class="badge" :class="{'badge-success': stock.change > 0, 'badge-secondary': stock.change == 0, 'badge-danger': stock.change < 0}">{{ stock.percent_change }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+
+</style>
+
+<script>
+    export default {
+        data() {
+            return {
+                stocks: []
+            }
+        },
+        created() {
+            this.fetchStocks();
+            this.listenForChanges();
+        },
+        methods: {
+            fetchStocks() {
+                axios.get('/api/us-stock-list').then((response) => {
+                    this.stocks = response.data;
+                })
+            },
+            listenForChanges() {
+                Pusher.logToConsole = true;
+                Echo.channel('us-stock')
+                .listen('.us-stock-watcher', (e) => {
+                    console.log(e);
+                    var stock = this.stocks.find((stock) => stock.id === e.id);
+                        // check if user exists on leaderboard
+                        if(stock){
+                            var index = this.stocks.indexOf(stock);
+                            this.stocks[index].prev_price = e.prev_price;
+                            this.stocks[index].current_price = e.current_price;
+                            this.stocks[index].change = e.change;
+                            this.stocks[index].percent_change = e.percent_change;
+                        }
+                        // if not, add 'em
+                        else {
+                            this.stocks.push(e)
+                        }
+                    })
+            }
+        },
+        computed: {
+            sortedStocks() {
+                function compare(a, b) {
+                    if (a.symbol < b.symbol)
+                        return -1;
+                    if (a.symbol > b.symbol)
+                        return 1;
+                    return 0;
+                }
+                return this.stocks.sort(compare)
+            }
+        }
+    }
+
+</script>
