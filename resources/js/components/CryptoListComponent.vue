@@ -25,9 +25,9 @@
                                     <td>{{ ++index }}</td>
                                     <th>{{ crypto.symbol }}</th>
                                     <td>{{ crypto.name }}</td>
-                                    <td class="text-right">{{ crypto.last ? crypto.last.toLocaleString() : '-' }}</td>
-                                    <td class="text-right">{{ crypto.buy ? crypto.buy.toLocaleString() : '-' }}</td>
-                                    <td class="text-right">{{ crypto.sell  ? crypto.sell.toLocaleString() : '-' }}</td>
+                                    <td class="text-right">{{ crypto.last != null ? crypto.last.toLocaleString() : '-' }}</td>
+                                    <td class="text-right">{{ crypto.buy != null ? crypto.buy.toLocaleString() : '-' }}</td>
+                                    <td class="text-right">{{ crypto.sell != null  ? crypto.sell.toLocaleString() : '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>

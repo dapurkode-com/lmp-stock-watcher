@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\WatchlistStockIdx;
 use Goutte\Client;
 use Illuminate\Console\Command;
 
@@ -42,15 +43,29 @@ class ScrapIdx extends Command
 
         $crawler = $client->request('GET', 'https://www.idxchannel.com/market-stock');
 
-        $crawler->filterXPath("//table[@id='table_id']/tbody/tr")->each(function ($row) {
-            $this->info(json_encode(array(
-                'code' => $row->filter('td')->eq(1)->text(),
-                'name' => $row->filter('td')->eq(2)->text(),
-                'price' => $row->filter('td')->eq(3)->text(),
-                'change' => $row->filter('td')->eq(4)->text(),
-                'change_prc' => $row->filter('td')->eq(5)->text(),
-                'url' => $row->filter('td')->eq(1)->filterXPath('//a[1]')->attr('href')
-            )));
+        $symbol_to_listen = ['ANTM', 'ASII', 'BBRI', 'BUKA', 'KLBF', 'PTBA', 'TLKM', 'WIKA'];
+
+        $crawler->filterXPath("//table[@id='table_id']/tbody/tr")->each(function ($row) use ($symbol_to_listen) {
+
+            if (in_array($row->filter('td')->eq(1)->text(), $symbol_to_listen)) {
+
+                $this->info(json_encode(array(
+                    'code' => $row->filter('td')->eq(1)->text(),
+                    'name' => $row->filter('td')->eq(2)->text(),
+                    'price' => $row->filter('td')->eq(4)->text(),
+                )));
+
+                WatchlistStockIdx::updateOrCreate([
+                    'symbol' => $row->filter('td')->eq(1)->text()
+                ], [
+                    'symbol' => $row->filter('td')->eq(1)->text(),
+                    'name' => $row->filter('td')->eq(2)->text(),
+                    'prev_price' => $row->filter('td')->eq(3)->text(),
+                    'current_price' => $row->filter('td')->eq(4)->text(),
+                    'change' => $row->filter('td')->eq(5)->text(),
+                    'percent_change' => rtrim($row->filter('td')->eq(6)->text(), '%'),
+                ]);
+            }
         });
 
         return 1;

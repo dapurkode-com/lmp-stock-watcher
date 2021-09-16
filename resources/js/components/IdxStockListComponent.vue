@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10 col-xs-12">
                 <div class="card">
-                    <div class="card-header"><h3 class="card-title">Watchlist (USD)</h3></div>
+                    <div class="card-header"><h3 class="card-title">Watchlist (IDR)</h3></div>
 
                     <div class="card-body p-0">
                         <table class="table table-striped">
@@ -57,13 +57,13 @@
         },
         methods: {
             fetchStocks() {
-                axios.get('/api/us-stock-list').then((response) => {
+                axios.get('/api/idx-stock-list').then((response) => {
                     this.stocks = response.data;
                 })
             },
             listenForChanges() {
-                Echo.channel('us-stock')
-                .listen('.us-stock-watcher', (e) => {
+                Echo.channel('idx-stock')
+                .listen('.IdxStockEvent', (e) => {
                     console.log(e);
                     var stock = this.stocks.find((stock) => stock.id === e.id);
                         if(stock){

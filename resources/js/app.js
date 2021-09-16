@@ -21,6 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('us-stock-list', require('./components/UsStockListComponent.vue').default);
+Vue.component('idx-stock-list', require('./components/IdxStockListComponent.vue').default);
 Vue.component('crypto-list', require('./components/CryptoListComponent.vue').default);
 
 /**

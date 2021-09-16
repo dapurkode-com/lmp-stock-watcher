@@ -233,6 +233,10 @@ return [
 
         // Sidebar items:
         [
+            'text'        => 'Indonesia Stock',
+            'url'         => 'idx-stock-list'
+        ],
+        [
             'text'        => 'US Stock',
             'url'         => 'us-stock-list'
         ],

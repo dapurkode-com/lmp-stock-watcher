@@ -25,5 +25,6 @@ Route::get('/home', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('us-stock-list', [\App\Http\Controllers\StockUsController::class, 'index']);
+    Route::get('idx-stock-list', [\App\Http\Controllers\IdxStockController::class, 'index']);
     Route::get('crypto-list', [\App\Http\Controllers\CryptoController::class, 'index']);
 });
