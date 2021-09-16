@@ -2054,6 +2054,117 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CryptoListComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CryptoListComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      cryptos: []
+    };
+  },
+  created: function created() {
+    this.fetchCryptos();
+    this.listenForChanges();
+  },
+  methods: {
+    fetchCryptos: function fetchCryptos() {
+      var _this = this;
+
+      axios.get('/api/crypto-list').then(function (response) {
+        _this.cryptos = response.data;
+      });
+    },
+    listenForChanges: function listenForChanges() {
+      var _this2 = this;
+
+      Pusher.logToConsole = true;
+      Echo.channel('crypto').listen('.CryptoEvent', function (e) {
+        console.log(e);
+
+        var crypto = _this2.cryptos.find(function (crypto) {
+          return crypto.id === e.id;
+        });
+
+        if (crypto) {
+          var index = _this2.cryptos.indexOf(crypto);
+
+          _this2.cryptos[index].last = e.last;
+          _this2.cryptos[index].buy = e.buy;
+          _this2.cryptos[index].sell = e.sell;
+        } else {
+          _this2.cryptos.push(e);
+        }
+      });
+    }
+  },
+  computed: {
+    sortedCryptos: function sortedCryptos() {
+      function compare(a, b) {
+        if (a.symbol < b.symbol) return -1;
+        if (a.symbol > b.symbol) return 1;
+        return 0;
+      }
+
+      return this.cryptos.sort(compare);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -2167,14 +2278,12 @@ __webpack_require__.r(__webpack_exports__);
     listenForChanges: function listenForChanges() {
       var _this2 = this;
 
-      Pusher.logToConsole = true;
       Echo.channel('us-stock').listen('.us-stock-watcher', function (e) {
         console.log(e);
 
         var stock = _this2.stocks.find(function (stock) {
           return stock.id === e.id;
-        }); // check if user exists on leaderboard
-
+        });
 
         if (stock) {
           var index = _this2.stocks.indexOf(stock);
@@ -2183,8 +2292,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.stocks[index].current_price = e.current_price;
           _this2.stocks[index].change = e.change;
           _this2.stocks[index].percent_change = e.percent_change;
-        } // if not, add 'em
-        else {
+        } else {
           _this2.stocks.push(e);
         }
       });
@@ -5834,6 +5942,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('us-stock-list', __webpack_require__(/*! ./components/UsStockListComponent.vue */ "./resources/js/components/UsStockListComponent.vue")["default"]);
+Vue.component('crypto-list', __webpack_require__(/*! ./components/CryptoListComponent.vue */ "./resources/js/components/CryptoListComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -47435,6 +47544,45 @@ runtime.setup(pusher_Pusher);
 
 /***/ }),
 
+/***/ "./resources/js/components/CryptoListComponent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/CryptoListComponent.vue ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CryptoListComponent_vue_vue_type_template_id_695a6da3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoListComponent.vue?vue&type=template&id=695a6da3& */ "./resources/js/components/CryptoListComponent.vue?vue&type=template&id=695a6da3&");
+/* harmony import */ var _CryptoListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CryptoListComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CryptoListComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CryptoListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CryptoListComponent_vue_vue_type_template_id_695a6da3___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CryptoListComponent_vue_vue_type_template_id_695a6da3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CryptoListComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue ***!
@@ -47513,6 +47661,22 @@ component.options.__file = "resources/js/components/UsStockListComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/CryptoListComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/CryptoListComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CryptoListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CryptoListComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CryptoListComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CryptoListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -47542,6 +47706,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UsStockListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UsStockListComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/UsStockListComponent.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UsStockListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CryptoListComponent.vue?vue&type=template&id=695a6da3&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/CryptoListComponent.vue?vue&type=template&id=695a6da3& ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CryptoListComponent_vue_vue_type_template_id_695a6da3___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CryptoListComponent_vue_vue_type_template_id_695a6da3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CryptoListComponent_vue_vue_type_template_id_695a6da3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CryptoListComponent.vue?vue&type=template&id=695a6da3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CryptoListComponent.vue?vue&type=template&id=695a6da3&");
+
 
 /***/ }),
 
@@ -47575,6 +47756,125 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UsStockListComponent_vue_vue_type_template_id_30041f32___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UsStockListComponent_vue_vue_type_template_id_30041f32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UsStockListComponent.vue?vue&type=template&id=30041f32& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/UsStockListComponent.vue?vue&type=template&id=30041f32&");
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CryptoListComponent.vue?vue&type=template&id=695a6da3&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CryptoListComponent.vue?vue&type=template&id=695a6da3& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-10 col-xs-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body p-0" }, [
+            _c("table", { staticClass: "table table-striped" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                [
+                  _vm.cryptos.length == 0
+                    ? _c("tr", [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-center",
+                            attrs: { colspan: "6" }
+                          },
+                          [_vm._v("No Data")]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.sortedCryptos, function(crypto, index) {
+                    return _c("tr", { key: crypto.id }, [
+                      _c("td", [_vm._v(_vm._s(++index))]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(_vm._s(crypto.symbol))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(crypto.name))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(
+                          _vm._s(
+                            crypto.last ? crypto.last.toLocaleString() : "-"
+                          )
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(
+                          _vm._s(crypto.buy ? crypto.buy.toLocaleString() : "-")
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(
+                          _vm._s(
+                            crypto.sell ? crypto.sell.toLocaleString() : "-"
+                          )
+                        )
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Watchlist (IDR)")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Symbol")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Last")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Buy")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Sell")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
 
 
 /***/ }),
@@ -47677,13 +47977,35 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(stock.name))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(stock.prev_price))]),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(
+                          _vm._s(
+                            stock.prev_price
+                              ? stock.prev_price.toLocaleString()
+                              : "-"
+                          )
+                        )
+                      ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(stock.current_price))]),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(
+                          _vm._s(
+                            stock.current_price
+                              ? stock.current_price.toLocaleString()
+                              : "-"
+                          )
+                        )
+                      ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(stock.change))]),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(
+                          _vm._s(
+                            stock.change ? stock.change.toLocaleString() : "-"
+                          )
+                        )
+                      ]),
                       _vm._v(" "),
-                      _c("td", [
+                      _c("td", { staticClass: "text-right" }, [
                         _c(
                           "span",
                           {
@@ -47694,7 +48016,15 @@ var render = function() {
                               "badge-danger": stock.change < 0
                             }
                           },
-                          [_vm._v(_vm._s(stock.percent_change))]
+                          [
+                            _vm._v(
+                              _vm._s(
+                                stock.percent_change
+                                  ? stock.percent_change.toLocaleString()
+                                  : "-"
+                              )
+                            )
+                          ]
                         )
                       ])
                     ])
@@ -47715,7 +48045,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Watchlist")])
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Watchlist (USD)")])
     ])
   },
   function() {
@@ -47730,13 +48060,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Prev")]),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Prev")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Curr")]),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Curr")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Chng")]),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Chng")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Chng %")])
+        _c("th", { staticClass: "text-right" }, [_vm._v("Chng %")])
       ])
     ])
   }

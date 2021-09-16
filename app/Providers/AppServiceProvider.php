@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\CryptoEvent;
 use App\Events\UsStockEvent;
+use App\Models\WatchlistStockCrypto;
 use App\Models\WatchlistStockUs;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,6 +33,14 @@ class AppServiceProvider extends ServiceProvider
 
         WatchlistStockUs::updated(function ($stock) {
             event(new UsStockEvent($stock));
+        });
+
+        WatchlistStockCrypto::created(function ($crypto) {
+            event(new CryptoEvent($crypto));
+        });
+
+        WatchlistStockCrypto::updated(function ($crypto) {
+            event(new CryptoEvent($crypto));
         });
     }
 }

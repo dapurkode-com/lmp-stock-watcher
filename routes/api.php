@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('us-stock-list', [\App\Http\Controllers\Api\StockUsController::class, 'index']);
+    Route::get('crypto-list', [\App\Http\Controllers\Api\CryptoController::class, 'index']);
 });

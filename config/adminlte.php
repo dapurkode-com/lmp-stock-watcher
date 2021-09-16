@@ -236,6 +236,10 @@ return [
             'text'        => 'US Stock',
             'url'         => 'us-stock-list'
         ],
+        [
+            'text'        => 'Crypto',
+            'url'         => 'crypto-list'
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
