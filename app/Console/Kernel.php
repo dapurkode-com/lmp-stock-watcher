@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('scrap:commodities')->weekdays()->everyFiveMinutes()->between('8:00', '17:00');
-        $schedule->command('scrap:idx')->weekdays()->everyFiveMinutes()->between('8:00', '17:00');
-        $schedule->command('us-stock:price')->weekdays()->everyFiveMinutes()->between('8:00', '17:00');
+        $schedule->command('scrap:commodities')->weekdays()->everyFiveMinutes()->timezone('America/New_York')->between('8:00', '17:00');
+        $schedule->command('scrap:idx')->weekdays()->everyFiveMinutes()->timezone('Asia/Makassar')->between('8:00', '17:00');
+        $schedule->command('us-stock:price')->weekdays()->everyFiveMinutes()->timezone('America/New_York')->between('8:00', '17:00');
         $schedule->command('crypto:price-2')->everyFiveMinutes();
     }
 
