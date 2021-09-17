@@ -244,6 +244,10 @@ return [
             'text'        => 'Crypto',
             'url'         => 'crypto-list'
         ],
+        [
+            'text'        => 'Commodity',
+            'url'         => 'commodity-list'
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

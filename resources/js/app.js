@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('us-stock-list', require('./components/UsStockListComponent.vue').default);
 Vue.component('idx-stock-list', require('./components/IdxStockListComponent.vue').default);
 Vue.component('crypto-list', require('./components/CryptoListComponent.vue').default);
+Vue.component('commodity-list', require('./components/CommodityListComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

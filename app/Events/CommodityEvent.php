@@ -4,27 +4,24 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class IdxStockEvent implements ShouldBroadcastNow
+class CommodityEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $stock;
+    public $commodity;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($stock)
+    public function __construct($commodity)
     {
-        $this->stock = $stock;
+        $this->commodity = $commodity;
     }
 
     /**
@@ -34,24 +31,22 @@ class IdxStockEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('idx-stock');
+        return new Channel('commodity');
     }
 
     public function broadcastWith()
     {
         return [
-            'id' => $this->stock->id,
-            'name' => $this->stock->name,
-            'symbol' => $this->stock->symbol,
-            'prev_price' => $this->stock->prev_price,
-            'current_price' => $this->stock->current_price,
-            'change' => $this->stock->change,
-            'percent_change' => $this->stock->percent_change
+            'id' => $this->commodity->id,
+            'name' => $this->commodity->name,
+            'current_price' => $this->commodity->current_price,
+            'change' => $this->commodity->change,
+            'percent_change' => $this->commodity->percent_change
         ];
     }
 
     public function broadcastAs()
     {
-        return 'IdxStockEvent';
+        return 'CommodityEvent';
     }
 }
