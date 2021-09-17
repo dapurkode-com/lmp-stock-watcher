@@ -25,6 +25,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('scrap:commodities')->weekdays()->everyFiveMinutes()->between('8:00', '17:00');
+        $schedule->command('scrap:idx')->weekdays()->everyFiveMinutes()->between('8:00', '17:00');
+        $schedule->command('us-stock:price')->weekdays()->everyFiveMinutes()->between('8:00', '17:00');
+        $schedule->command('crypto:price-2')->everyFiveMinutes();
     }
 
     /**
@@ -34,7 +38,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

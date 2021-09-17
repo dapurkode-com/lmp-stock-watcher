@@ -48174,7 +48174,7 @@ var render = function() {
                     return _c("tr", { key: commodity.id }, [
                       _c("td", [_vm._v(_vm._s(++index))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(commodity.name))]),
+                      _c("th", [_vm._v(_vm._s(commodity.name))]),
                       _vm._v(" "),
                       _c("td", { staticClass: "text-right" }, [
                         _vm._v(

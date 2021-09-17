@@ -22,7 +22,7 @@
                                 </tr>
                                 <tr v-for="(commodity, index) in sortedcommoditys" :key="commodity.id">
                                     <td>{{ ++index }}</td>
-                                    <td>{{ commodity.name }}</td>
+                                    <th>{{ commodity.name }}</th>
                                     <td class="text-right">{{ commodity.current_price != null ? commodity.current_price.toLocaleString() : '-' }}</td>
                                     <td class="text-right">{{ commodity.change != null ? commodity.change.toLocaleString() : '-' }}</td>
                                     <td class="text-right"><span class="badge" :class="{'badge-success': commodity.change > 0, 'badge-secondary': commodity.change == 0, 'badge-danger': commodity.change < 0}">{{ commodity.percent_change != null ? commodity.percent_change.toLocaleString() : '-' }}</span></td>

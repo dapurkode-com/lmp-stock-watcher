@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name'              => 'Satya Wibawa',
-            'email'             => 'digiforest.id@gmail.com',
-            'password'          => bcrypt('acs22acs'), // secret
+            'name'              => 'Admin',
+            'email'             => 'admin@gmail.com',
+            'password'          => bcrypt('rahasia'), // secret
             'remember_token'    => Str::random(10),
         ]);
     }
