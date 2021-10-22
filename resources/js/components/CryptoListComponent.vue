@@ -3,7 +3,12 @@
         <div class="row justify-content-center">
             <div class="col-md-10 col-xs-12">
                 <div class="card">
-                    <div class="card-header"><h3 class="card-title">Watchlist (IDR)</h3></div>
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title"><i class="fas fa-eye"></i> Watchlist</h3>
+                            <small class="font-italic"> per coin</small>
+                        </div>
+                    </div>
 
                     <div class="card-body p-0">
                         <table class="table table-striped">
@@ -31,6 +36,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>Currency in United State Dollar (USD)</small>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,12 @@
         <div class="row justify-content-center">
             <div class="col-md-10 col-xs-12">
                 <div class="card">
-                    <div class="card-header"><h3 class="card-title">Watchlist (IDR)</h3></div>
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title"><i class="fas fa-eye"></i> Watchlist</h3>
+                            <small class="font-italic"> per sheet</small>
+                        </div>
+                    </div>
 
                     <div class="card-body p-0">
                         <table class="table table-striped">
@@ -12,10 +17,10 @@
                                     <th>#</th>
                                     <th>Symbol</th>
                                     <th>Name</th>
-                                    <th class="text-right">Prev</th>
-                                    <th class="text-right">Curr</th>
-                                    <th class="text-right">Chng</th>
-                                    <th class="text-right">Chng %</th>
+                                    <th class="text-right">Previous</th>
+                                    <th class="text-right">Current</th>
+                                    <th class="text-right">Change</th>
+                                    <th class="text-right">%</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,6 +38,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>Currency in Indonesian Rupiah (IDR)</small>
                     </div>
                 </div>
             </div>

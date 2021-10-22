@@ -121,16 +121,16 @@ return [
     |
     */
 
-    'classes_body' => '',
-    'classes_brand' => '',
-    'classes_brand_text' => '',
+    'classes_body' => 'dark-mode accent-orange',
+    'classes_brand' => 'navbar-dark',
+    'classes_brand_text' => 'text-white',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
-    'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_content' => 'pt-3',
+    'classes_sidebar' => 'sidebar-dark-orange elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
-    'classes_topnav_nav' => 'navbar-expand',
+    'classes_topnav' => 'navbar-dark',
+    'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
     /*
@@ -233,32 +233,31 @@ return [
 
         // Sidebar items:
         [
-            'text'        => 'Indonesia Stock',
-            'url'         => 'idx-stock-list'
+            'icon'          => 'fas fa-landmark mx-1',
+            'text'          => 'Stock',
+            'submenu'       => [
+                [
+                    'icon'        => 'fas fa-caret-right ml-3 mr-1',
+                    'text'        => 'Indonesia Stock',
+                    'url'         => 'idx-stock-list',
+                ],
+                [
+                    'icon'        => 'fas fa-caret-right ml-3 mr-1',
+                    'text'        => 'US Stock',
+                    'url'         => 'us-stock-list'
+                ],
+            ]
         ],
         [
-            'text'        => 'US Stock',
-            'url'         => 'us-stock-list'
+            'icon'          => 'fas fa-coins mx-1',
+            'text'          => 'Cryptocurrency',
+            'url'           => 'crypto-list'
         ],
         [
-            'text'        => 'Crypto',
-            'url'         => 'crypto-list'
+            'icon'          => 'fas fa-balance-scale mx-1',
+            'text'          => 'Commodities',
+            'url'           => 'commodity-list'
         ],
-        [
-            'text'        => 'Commodity',
-            'url'         => 'commodity-list'
-        ],
-        // ['header' => 'account_settings'],
-        // [
-        //     'text' => 'profile',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-user',
-        // ],
-        // [
-        //     'text' => 'change_password',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
     ],
 
     /*
