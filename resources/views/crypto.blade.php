@@ -21,5 +21,5 @@
 @stop
 
 @section('content')
-    <crypto-list></crypto-list>
+    <crypto-list user_id="{{auth()->user()->id}}"></crypto-list>
 @stop

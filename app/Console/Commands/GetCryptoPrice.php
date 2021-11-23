@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
-use GuzzleHttp\Client;
-use Illuminate\Console\Command;
 use App\Models\WatchlistStockCrypto;
+use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Console\Command;
 
 class GetCryptoPrice extends Command
 {
@@ -13,14 +15,14 @@ class GetCryptoPrice extends Command
      *
      * @var string
      */
-    protected $signature = 'crypto:price';
+    protected $signature = 'crypto:price-2';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Retrieving Crypto Prince on Coin Market Cap';
+    protected $description = 'Retrieving Crypto Prince on Indodax';
 
     /**
      * Create a new command instance.
@@ -37,46 +39,32 @@ class GetCryptoPrice extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         try {
             $client = new Client;
-            $endpoint = config('app.coinmarketcap.url') . '/cryptocurrency/price-performance-stats/latest';
-            $token = config('app.coinmarketcap.api_key');
-
+            $endpoint = 'https://indodax.com/api/tickers';
 
             $symbols = WatchlistStockCrypto::where('is_active', true)->get();
 
-            $symbol_to_listen = $symbols->pluck('symbol')->implode(',');
+            $symbol_to_listen = $symbols->pluck('symbol');
 
-            $this->info("Requesting data for $symbol_to_listen...");
-
-            $response = $client->request('GET', $endpoint, [
-                'headers' => [
-                    'Accept'            => 'application/json',
-                    'X-CMC_PRO_API_KEY' => $token
-                ], 'query' => [
-                    'symbol'     => $symbol_to_listen
-                ]
-            ]);
+            $response = $client->request('GET', $endpoint);
             if ($response->getStatusCode() == 200) {
                 $content = json_decode($response->getBody(), true);
 
-                foreach ($symbols as $symbol) {
-
-                    $data = $content['data'][$symbol->marketcap_id];
+                foreach ($symbol_to_listen as $symbol) {
+                    $key = strtolower($symbol) . '_idr';
+                    $data = array_key_exists($key, $content['tickers']) ? $content['tickers'][$key] : null;
 
                     if ($data != null) {
                         $this->info(json_encode($data));
                         WatchlistStockCrypto::updateOrCreate([
-                            'symbol' => $data['symbol'],
-                            'name' => $data['name'],
-                            'marketcap_id'   => $data['id']
+                            'symbol' => $symbol,
                         ], [
-                            'prev_price' => $data['periods']['all_time']['quote']['USD']['open'],
-                            'current_price' => $data['periods']['all_time']['quote']['USD']['close'],
-                            'change' => $data['periods']['all_time']['quote']['USD']['price_change'],
-                            'prev_price' => $data['periods']['all_time']['quote']['USD']['open'],
+                            'last' => $data['last'],
+                            'buy' => $data['buy'],
+                            'sell' => $data['sell'],
                         ]);
                     }
                 }
@@ -86,7 +74,7 @@ class GetCryptoPrice extends Command
             $this->info('');
 
             return 1;
-        } catch (Exception $e) {
+        } catch (Exception|GuzzleException $e) {
             $this->error($e->getMessage());
             return 0;
         }

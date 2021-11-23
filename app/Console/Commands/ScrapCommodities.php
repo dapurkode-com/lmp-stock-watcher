@@ -2,7 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\NumberUtilHelper;
+use App\Helpers\RateHelper;
 use App\Models\WatchlistStockCommodity;
+use Carbon\Carbon;
+use DB;
+use Exception;
 use Goutte\Client;
 use Illuminate\Console\Command;
 
@@ -13,7 +18,7 @@ class ScrapCommodities extends Command
      *
      * @var string
      */
-    protected $signature = 'scrap:commodities';
+    protected $signature = 'watch:commodity';
 
     /**
      * The console command description.
@@ -36,42 +41,37 @@ class ScrapCommodities extends Command
      * Execute the console command.
      *
      * @return int
+     * @throws Exception
      */
-    public function handle()
+    public function handle(): int
     {
-        $client = new Client();
+        $start = microtime(true);
+        $now = Carbon::now();
 
+        $client = new Client();
         $crawler = $client->request('GET', "https://markets.businessinsider.com/commodities");
 
-        $name_to_listen = ['Gold', 'Silver'];
+        $rate = RateHelper::getRate('USD');
 
-        $crawler->filterXPath("//table[2]/tbody/tr")->each(function ($row) use ($name_to_listen) {
-            if (in_array($row->filter('td')->eq(0)->text(), $name_to_listen)) {
+        $crawler->filterXPath("//table[2]/tbody/tr")->each(function ($row) use ($now, $rate) {
 
-                $this->info(json_encode(array(
-                    'name' => $row->filter('td')->eq(0)->text(),
-                    'price' => $row->filter('td')->eq(1)->text(),
-                )));
-
-
-                WatchlistStockCommodity::updateOrCreate([
-                    'name' => $row->filter('td')->eq(0)->text()
-                ], [
-                    'name' => $row->filter('td')->eq(0)->text(),
-                    'current_price' => $this->floatvalue($row->filter('td')->eq(1)->text()),
-                    'change' => $this->floatvalue($row->filter('td')->eq(3)->text()),
-                    'percent_change' => $this->floatvalue(rtrim($row->filter('td')->eq(2)->text(), '%')),
-                ]);
-            }
+            $current_price = RateHelper::calcWithRate($rate, $row->filter('td')->eq(1)->text());
+            $change = RateHelper::calcWithRate($rate, $row->filter('td')->eq(3)->text());
+            WatchlistStockCommodity::updateOrCreate([
+                'name' => $row->filter('td')->eq(0)->text()
+            ], [
+                'prev_day_close_price' => $current_price - $change,
+                'current_price' => $current_price,
+                'change' => $change,
+                'percent_change' => NumberUtilHelper::floatValue(rtrim($row->filter('td')->eq(2)->text(), '%')),
+                'last_updated' => $now
+            ]);
         });
 
+        $time = microtime(true) - $start;
+        $this->info("Execute time : $time");
         return 1;
     }
 
-    function floatvalue($val)
-    {
-        $val = str_replace(",", ".", $val);
-        $val = preg_replace('/\.(?=.*\.)/', '', $val);
-        return floatval($val);
-    }
+
 }

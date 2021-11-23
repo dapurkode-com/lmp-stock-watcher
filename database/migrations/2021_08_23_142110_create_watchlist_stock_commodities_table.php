@@ -16,12 +16,11 @@ class CreateWatchlistStockCommoditiesTable extends Migration
         Schema::create('watchlist_stock_commodities', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->double('prev_price')->nullable();
+            $table->double('prev_day_close_price')->nullable();
             $table->double('current_price')->nullable();
             $table->double('change')->nullable();
             $table->double('percent_change')->nullable();
-            $table->boolean("is_active")->default(true);
-            $table->timestamps();
+            $table->timestamp('last_updated')->nullable();
         });
     }
 

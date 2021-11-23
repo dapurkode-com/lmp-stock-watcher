@@ -21,5 +21,5 @@
 @stop
 
 @section('content')
-    <commodity-list></commodity-list>
+    <commodity-list user_id="{{auth()->user()->id}}"></commodity-list>
 @stop

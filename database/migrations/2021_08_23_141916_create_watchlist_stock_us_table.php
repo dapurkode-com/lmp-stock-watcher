@@ -17,12 +17,11 @@ class CreateWatchlistStockUsTable extends Migration
             $table->id();
             $table->string('symbol', 10);
             $table->string('name', 255);
-            $table->double('prev_price')->nullable();
+            $table->double('prev_day_close_price')->nullable();
             $table->double('current_price')->nullable();
             $table->double('change')->nullable();
             $table->double('percent_change')->nullable();
-            $table->boolean("is_active")->default(true);
-            $table->timestamps();
+            $table->timestamp('last_updated')->nullable();
         });
     }
 

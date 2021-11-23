@@ -232,6 +232,7 @@ return [
         ],
 
         // Sidebar items:
+        ['header' => 'WATCHLIST'],
         [
             'icon'          => 'fas fa-landmark mx-1',
             'text'          => 'Stock',

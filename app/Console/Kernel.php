@@ -2,6 +2,13 @@
 
 namespace App\Console;
 
+use App\Console\Commands\GetCryptoUpdate;
+use App\Console\Commands\GetUsStockUpdate;
+use App\Console\Commands\IdleSessionRemover;
+use App\Console\Commands\ScrapCommodities;
+use App\Console\Commands\ScrapIdx;
+use App\Console\Commands\UpdateCloseDayPrice;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,16 +26,22 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('scrap:commodities')->weekdays()->everyFiveMinutes()->timezone('America/New_York')->between('8:00', '17:00');
-        $schedule->command('scrap:idx')->weekdays()->everyFiveMinutes()->timezone('Asia/Makassar')->between('8:00', '17:00');
-        $schedule->command('us-stock:price')->weekdays()->everyFiveMinutes()->timezone('America/New_York')->between('8:00', '17:00');
-        $schedule->command('crypto:price-2')->everyFiveMinutes();
+        $schedule->command(ScrapCommodities::class)->weekdays()
+            ->everyFiveMinutes()->timezone('America/New_York')->between('8:00', '17:00');
+        $schedule->command(ScrapIdx::class)->weekdays()
+            ->everyFiveMinutes()->timezone('Asia/Jakarta')->between('8:00', '17:00');
+        $schedule->command(GetUsStockUpdate::class)->weekdays()
+            ->everyTenMinutes()->timezone('America/New_York')->between('8:00', '17:00');
+        $schedule->command(GetCryptoUpdate::class)->everyFourHours();
+        $schedule->command(UpdateCloseDayPrice::class)->when(function () {
+            return Carbon::now()->timezone('Asia/Jakarta')->endOfDay();
+        });
+        $schedule->command(IdleSessionRemover::class)->everyMinute();
     }
 
     /**
