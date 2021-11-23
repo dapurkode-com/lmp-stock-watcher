@@ -116,14 +116,14 @@
         methods: {
             fetchCommodities() {
                 this.isCardBusy = true
-                axios.get('/api/commodities').then((response) => {
+                axios.get('/api/watchlist/commodities').then((response) => {
                     this.commodities = response.data.commodities;
                     this.isCardBusy = false
                 })
             },
             fetchStockResources() {
                 this.isFormBusy = true
-                axios.get('/api/get-resource-commodity', {
+                axios.get('/api/watchlist/get-resource-commodity', {
                     params: {
                         query: this.query
                     }
@@ -153,7 +153,7 @@
                     })
             },
             store(commodity, index) {
-                axios.post('/api/store-commodity', {
+                axios.post('/api/watchlist/store-commodity', {
                     id: commodity.id
                 }).then((response) => {
                     if (response.data.status) {
@@ -182,7 +182,7 @@
                 })
             },
             remove({commodity, index}) {
-                axios.post('/api/remove-commodity', {
+                axios.post('/api/watchlist/remove-commodity', {
                     id: commodity.id
                 }).then((response) => {
                     if (response.data.status) {

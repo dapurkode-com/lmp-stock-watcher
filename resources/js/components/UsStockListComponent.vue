@@ -119,7 +119,7 @@ export default {
     methods: {
         fetchStocks() {
             this.isCardBusy = true
-            axios.get('/api/us-stocks').then((response) => {
+            axios.get('/api/watchlist/us-stocks').then((response) => {
                 this.stocks = response.data.data;
                 this.isCardBusy = false
             })
@@ -146,7 +146,7 @@ export default {
         },
         fetchStockResources() {
             this.isFormBusy = true
-            axios.get('/api/get-resource-us-stock', {
+            axios.get('/api/watchlist/get-resource-us-stock', {
                 params: {
                     query: this.query
                 }
@@ -157,7 +157,7 @@ export default {
             })
         },
         store(stock, index) {
-            axios.post('/api/store-us-stock', {
+            axios.post('/api/watchlist/store-us-stock', {
                 symbol: stock.symbol,
                 name: stock.description,
             }).then((response) => {
@@ -187,7 +187,7 @@ export default {
             })
         },
         remove({stock, index}) {
-            axios.post('/api/remove-us-stock', {
+            axios.post('/api/watchlist/remove-us-stock', {
                 id: stock.id
             }).then((response) => {
                 if (response.data.status) {

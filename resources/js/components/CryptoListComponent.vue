@@ -115,7 +115,7 @@ export default {
     methods: {
         fetchStocks() {
             this.isCardBusy = true
-            axios.get('/api/cryptos').then((response) => {
+            axios.get('/api/watchlist/cryptos').then((response) => {
                 this.cryptos = response.data.data;
                 this.isCardBusy = false
             })
@@ -141,7 +141,7 @@ export default {
         },
         fetchStockResources() {
             this.isFormBusy = true
-            axios.get('/api/get-resource-crypto', {
+            axios.get('/api/watchlist/get-resource-crypto', {
                 params: {
                     query: this.query
                 }
@@ -152,7 +152,7 @@ export default {
             })
         },
         store(stock, index) {
-            axios.post('/api/store-crypto', {
+            axios.post('/api/watchlist/store-crypto', {
                 id: stock.id,
             }).then((response) => {
                 if (response.data.status) {
@@ -181,7 +181,7 @@ export default {
             })
         },
         remove({stock, index}) {
-            axios.post('/api/remove-crypto', {
+            axios.post('/api/watchlist/remove-crypto', {
                 id: stock.id
             }).then((response) => {
                 if (response.data.status) {

@@ -19,23 +19,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('us-stocks', [\App\Http\Controllers\Api\UsStockController::class, 'index']);
-    Route::get('idx-stocks', [\App\Http\Controllers\Api\IdxStockController::class, 'index']);
-    Route::get('cryptos', [\App\Http\Controllers\Api\CryptoController::class, 'index']);
-    Route::get('commodities', [\App\Http\Controllers\Api\CommodityController::class, 'index']);
 
-    Route::get('get-resource-us-stock', [\App\Http\Controllers\Api\UsStockController::class, 'getResource']);
-    Route::get('get-resource-idx-stock', [\App\Http\Controllers\Api\IdxStockController::class, 'getResource']);
-    Route::get('get-resource-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'getResource']);
-    Route::get('get-resource-commodity', [\App\Http\Controllers\Api\CommodityController::class, 'getResource']);
+    Route::prefix('watchlist')->group(function (){
+        Route::get('us-stocks', [\App\Http\Controllers\Api\UsStockController::class, 'index']);
+        Route::get('idx-stocks', [\App\Http\Controllers\Api\IdxStockController::class, 'index']);
+        Route::get('cryptos', [\App\Http\Controllers\Api\CryptoController::class, 'index']);
+        Route::get('commodities', [\App\Http\Controllers\Api\CommodityController::class, 'index']);
 
-    Route::post('store-us-stock', [\App\Http\Controllers\Api\UsStockController::class, 'store']);
-    Route::post('store-idx-stock', [\App\Http\Controllers\Api\IdxStockController::class, 'store']);
-    Route::post('store-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'store']);
-    Route::post('store-commodity', [\App\Http\Controllers\Api\CommodityController::class, 'store']);
+        Route::get('get-resource-us-stock', [\App\Http\Controllers\Api\UsStockController::class, 'getResource']);
+        Route::get('get-resource-idx-stock', [\App\Http\Controllers\Api\IdxStockController::class, 'getResource']);
+        Route::get('get-resource-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'getResource']);
+        Route::get('get-resource-commodity', [\App\Http\Controllers\Api\CommodityController::class, 'getResource']);
 
-    Route::post('remove-idx-stock', [\App\Http\Controllers\Api\IdxStockController::class, 'remove']);
-    Route::post('remove-us-stock', [\App\Http\Controllers\Api\UsStockController::class, 'remove']);
-    Route::post('remove-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'remove']);
-    Route::post('remove-commodity', [\App\Http\Controllers\Api\CommodityController::class, 'remove']);
+        Route::post('store-us-stock', [\App\Http\Controllers\Api\UsStockController::class, 'store']);
+        Route::post('store-idx-stock', [\App\Http\Controllers\Api\IdxStockController::class, 'store']);
+        Route::post('store-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'store']);
+        Route::post('store-commodity', [\App\Http\Controllers\Api\CommodityController::class, 'store']);
+
+        Route::post('remove-idx-stock', [\App\Http\Controllers\Api\IdxStockController::class, 'remove']);
+        Route::post('remove-us-stock', [\App\Http\Controllers\Api\UsStockController::class, 'remove']);
+        Route::post('remove-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'remove']);
+        Route::post('remove-commodity', [\App\Http\Controllers\Api\CommodityController::class, 'remove']);
+    });
 });
