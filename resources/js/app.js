@@ -25,7 +25,7 @@ Vue.use(BootstrapVue)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('my-dashboard', require('./components/DashboardComponent.vue').default);
 Vue.component('us-stock-list', require('./components/UsStockListComponent.vue').default);
 Vue.component('idx-stock-list', require('./components/IdxStockListComponent.vue').default);
 Vue.component('crypto-list', require('./components/CryptoListComponent.vue').default);

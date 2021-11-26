@@ -28,6 +28,7 @@
         "bootstrap-vue": "^2.21.2",
         "chart.js": "2.9.4",
         "laravel-echo": "^1.11.2",
+        "number-shortener": "^1.0.1",
         "pusher-js": "^7.0.3",
         "vue-chartjs": "^3.5.1"
     }
