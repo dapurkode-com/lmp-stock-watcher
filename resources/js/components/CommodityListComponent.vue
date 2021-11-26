@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <b-modal id="modal-1" hide-footer size="lg" title="Add Indonesia stock watchlist"
+        <b-modal id="modal-1" hide-footer size="lg" title="Add Commodity watchlist"
                  @hide="resetResourceForm" @show="resetResourceForm" scrollable>
             <b-overlay :show="isFormBusy" rounded="sm" no-wrap></b-overlay>
             <b-form @submit.stop.prevent="fetchStockResources">
@@ -157,7 +157,7 @@
                     id: commodity.id
                 }).then((response) => {
                     if (response.data.status) {
-                        this.$bvToast.toast('Stock has been added to watchlist.', {
+                        this.$bvToast.toast('Commodity has been added to watchlist.', {
                             title: `Commodity Watchlist`,
                             variant: 'success',
                             solid: true
@@ -186,7 +186,7 @@
                     id: commodity.id
                 }).then((response) => {
                     if (response.data.status) {
-                        this.$bvToast.toast('Stock has been removed from watchlist.', {
+                        this.$bvToast.toast('Commodity has been removed from watchlist.', {
                             title: `Commodity Watchlist`,
                             variant: 'success',
                             solid: true

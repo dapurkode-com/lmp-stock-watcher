@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Watchlist - Crypto')
+@section('title', 'Watchlist - Cryptocurrency')
 
 @section('content_header')
 <div class="container-fluid">

@@ -260,7 +260,7 @@ return [
         ],
         [
             'icon'          => 'fas fa-balance-scale nav-icon',
-            'text'          => 'Commodities',
+            'text'          => 'Commodity',
             'url'           => '/my-wallet/commodity'
         ],
         ['header' => 'WATCHLIST'],
@@ -287,7 +287,7 @@ return [
         ],
         [
             'icon'          => 'fas fa-balance-scale mx-1',
-            'text'          => 'Commodities',
+            'text'          => 'Commodity',
             'url'           => '/watchlist/commodity'
         ],
     ],

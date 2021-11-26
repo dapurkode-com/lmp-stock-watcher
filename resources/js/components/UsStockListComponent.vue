@@ -52,7 +52,7 @@
             </div>
         </div>
         <b-modal id="modal-1" hide-footer scrollable size="lg"
-                 title="Add Indonesia stock watchlist" @hide="resetResourceForm" @show="resetResourceForm">
+                 title="Add US stock watchlist" @hide="resetResourceForm" @show="resetResourceForm">
             <b-overlay :show="isFormBusy" rounded="sm" no-wrap></b-overlay>
             <b-form @submit.stop.prevent="fetchStockResources">
                 <b-input-group class="mb-3">

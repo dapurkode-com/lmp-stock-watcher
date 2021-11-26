@@ -66,7 +66,7 @@
             </div>
         </div>
         <b-modal id="modal-1" hide-footer scrollable size="lg"
-                 title="Add Indonesia Stock to My Wallet" @hide="resetResourceForm" @show="resetResourceForm">
+                 title="Add Cryptocurrency to My Wallet" @hide="resetResourceForm" @show="resetResourceForm">
             <b-overlay :show="isFormBusy" no-wrap rounded="sm"></b-overlay>
             <b-form @submit.stop.prevent="fetchCryptoResources">
                 <b-input-group class="mb-3">
@@ -219,8 +219,8 @@ export default {
                 amount: 0 + this.updateSoon.amount
             }).then((response) => {
                 if (response.data.status) {
-                    this.$bvToast.toast('Crypto has been added to wallet.', {
-                        title: `Crypto Wallet`,
+                    this.$bvToast.toast('Cryptocurrency has been added to wallet.', {
+                        title: `Cryptocurrency Wallet`,
                         variant: 'success',
                         solid: true
                     })
@@ -230,7 +230,7 @@ export default {
                     this.fetchCryptos()
                 } else {
                     this.$bvToast.toast('Something bad occur while adding to wallet.', {
-                        title: `Crypto Wallet`,
+                        title: `Cryptocurrency Wallet`,
                         variant: 'danger',
                         solid: true
                     })
@@ -238,7 +238,7 @@ export default {
                 }
             }).catch((error) => {
                 this.$bvToast.toast('Something bad occur while adding to wallet.', {
-                    title: `Crypto Wallet`,
+                    title: `Cryptocurrency Wallet`,
                     variant: 'danger',
                     solid: true
                 })
@@ -250,15 +250,15 @@ export default {
                 id: crypto.id
             }).then((response) => {
                 if (response.data.status) {
-                    this.$bvToast.toast('Crypto has been removed from wallet.', {
-                        title: `Crypto Wallet`,
+                    this.$bvToast.toast('Cryptocurrency has been removed from wallet.', {
+                        title: `Cryptocurrency Wallet`,
                         variant: 'success',
                         solid: true
                     })
                     this.$delete(this.cryptos, index)
                 } else {
                     this.$bvToast.toast('Something bad occur while removing.', {
-                        title: `Crypto Wallet`,
+                        title: `Cryptocurrency Wallet`,
                         variant: 'danger',
                         solid: true
                     })
@@ -266,7 +266,7 @@ export default {
                 }
             }).catch((error) => {
                 this.$bvToast.toast('Something bad occur while removing.', {
-                    title: `Crypto Wallet`,
+                    title: `Cryptocurrency Wallet`,
                     variant: 'danger',
                     solid: true
                 })

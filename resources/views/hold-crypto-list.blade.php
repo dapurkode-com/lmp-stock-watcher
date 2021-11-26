@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'My Wallet - Crypto')
+@section('title', 'My Wallet - Cryptocurrency')
 
 @section('content_header')
 <div class="container-fluid">

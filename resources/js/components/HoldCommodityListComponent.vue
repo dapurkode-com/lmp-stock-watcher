@@ -66,7 +66,7 @@
             </div>
         </div>
         <b-modal id="modal-1" hide-footer scrollable size="lg"
-                 title="Add Indonesia Stock to My Wallet" @hide="resetResourceForm" @show="resetResourceForm">
+                 title="Add Commodity to My Wallet" @hide="resetResourceForm" @show="resetResourceForm">
             <b-overlay :show="isFormBusy" no-wrap rounded="sm"></b-overlay>
             <b-form @submit.stop.prevent="fetchCommodityResources">
                 <b-input-group class="mb-3">
