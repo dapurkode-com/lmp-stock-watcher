@@ -160,7 +160,7 @@ export default {
         },
         listenForChanges() {
             Echo.private('my-wallet.' + this.user_id)
-                .listen('WatchlistUsStockEvent', (e) => {
+                .listen('.WatchlistUsStockEvent', (e) => {
                     console.log("WatchlistUsStockEvent: ")
                     console.log(e)
                     let stock = this.usStocks.find((stock) => stock.id === e.id);
@@ -174,7 +174,7 @@ export default {
                         this.usStocks.push(e)
                     }
                 })
-                .listen('WatchlistIdxStockEvent', (e) => {
+                .listen('.WatchlistIdxStockEvent', (e) => {
                     console.log("WatchlistIdxStockEvent: ")
                     console.log(e)
                     let stock = this.idxStocks.find((stock) => stock.id === e.id);
@@ -188,7 +188,7 @@ export default {
                         this.idxStocks.push(e)
                     }
                 })
-                .listen('WatchlistCryptoEvent', (e) => {
+                .listen('.WatchlistCryptoEvent', (e) => {
                     console.log("WatchlistCryptoEvent: ")
                     console.log(e)
                     let crypto = this.cryptos.find((crypto) => crypto.id === e.id);
@@ -201,7 +201,7 @@ export default {
                         this.cryptos.push(e)
                     }
                 })
-                .listen('WatchlistCommodityEvent', (e) => {
+                .listen('.WatchlistCommodityEvent', (e) => {
                     console.log("WatchlistCommodityEvent: ")
                     console.log(e)
                     let commodity = this.commodities.find((commodity) => commodity.id === e.id);
