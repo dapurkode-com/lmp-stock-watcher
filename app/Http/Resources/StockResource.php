@@ -2,9 +2,25 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Holdable;
+use App\Models\WatchlistStockCommodity;
+use App\Models\WatchlistStockCrypto;
+use App\Models\WatchlistStockIdx;
+use App\Models\WatchlistStockUs;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+
+/**
+ *
+ * @property-read Holdable $pivot
+ *
+ * @mixin WatchlistStockCommodity
+ * @mixin WatchlistStockCrypto
+ * @mixin WatchlistStockUs
+ * @mixin WatchlistStockIdx
+ *
+ */
 class StockResource extends JsonResource
 {
 
@@ -25,6 +41,12 @@ class StockResource extends JsonResource
             'change' => $this->change,
             'percent_change' => $this->percent_change_24h ?? $this->percent_change,
             'last_updated' => $this->last_updated,
+            'amount' => $this->whenPivotLoaded('holdables', function (){
+                return $this->pivot->amount;
+            }),
+            'unit' => $this->whenPivotLoaded('holdables', function (){
+                return $this->pivot->unit;
+            }),
         ];
     }
 }

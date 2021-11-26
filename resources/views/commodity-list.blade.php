@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Commodity')
+@section('title', 'Watchlist - Commodity')
 
 @section('content_header')
 <div class="container-fluid">
@@ -13,6 +13,7 @@
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item">Watchlist</li>
                 <li class="breadcrumb-item active">Commodities</li>
             </ol>
         </div>

@@ -40,12 +40,13 @@ class CryptoController extends Controller
     public function getResource(Request $request): JsonResponse
     {
         $user_id = auth()->user()->id;
-        $query = Str::lower($request->input('query', ''));
+        $keyword = Str::lower($request->input('query', ''));
         $cryptoResources = DB::table('watchlist_stock_cryptos')
-            ->where(DB::raw('LOWER(name)'), 'like', "%$query%")
-            ->orWhere(DB::raw('LOWER(symbol)'), 'like', "%$query%")
-            ->whereRaw("watchlist_stock_cryptos.id not in
-            (select watchable_id from watchables where user_id = $user_id and watchable_type like '%WatchlistStockCrypto%')")
+            ->whereRaw("not exists (select watchable_id from watchables where user_id = $user_id and watchable_id = watchlist_stock_cryptos.id and watchable_type like '%WatchlistStockCrypto%')")
+            ->where(function ($query) use ($keyword) {
+                $query->where(DB::raw('LOWER(name)'), 'like', "%$keyword%")
+                    ->orWhere(DB::raw('LOWER(symbol)'), 'like', "%$keyword%");
+            })
             ->get();
 
         return response()->json([

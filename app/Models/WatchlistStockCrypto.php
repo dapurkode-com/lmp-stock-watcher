@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -16,20 +18,22 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property float|null $percent_change_1h
  * @property float|null $percent_change_24h
  * @property string|null $last_updated
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto query()
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto whereCurrentPrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto whereLastUpdated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto wherePercentChange1h($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto wherePercentChange24h($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto wherePrevDayClosePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockCrypto whereSymbol($value)
- * @mixin \Illuminate\Database\Eloquent\Builder
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $watchableUsers
+ * @method static Builder|WatchlistStockCrypto newModelQuery()
+ * @method static Builder|WatchlistStockCrypto newQuery()
+ * @method static Builder|WatchlistStockCrypto query()
+ * @method static Builder|WatchlistStockCrypto whereCurrentPrice($value)
+ * @method static Builder|WatchlistStockCrypto whereId($value)
+ * @method static Builder|WatchlistStockCrypto whereLastUpdated($value)
+ * @method static Builder|WatchlistStockCrypto whereName($value)
+ * @method static Builder|WatchlistStockCrypto wherePercentChange1h($value)
+ * @method static Builder|WatchlistStockCrypto wherePercentChange24h($value)
+ * @method static Builder|WatchlistStockCrypto wherePrevDayClosePrice($value)
+ * @method static Builder|WatchlistStockCrypto whereSymbol($value)
+ * @mixin Builder
+ * @property-read Collection|User[] $watchableUsers
  * @property-read int|null $watchable_users_count
+ * @property-read Collection|\App\Models\User[] $holdableUsers
+ * @property-read int|null $holdable_users_count
  */
 class WatchlistStockCrypto extends Model
 {
@@ -60,5 +64,13 @@ class WatchlistStockCrypto extends Model
     public function watchableUsers(): MorphToMany
     {
         return $this->morphToMany(User::class, 'watchable');
+    }
+
+    /**
+     * @return MorphToMany|User[]
+     */
+    public function holdableUsers(): MorphToMany
+    {
+        return $this->morphToMany(User::class, 'holdable')->withPivot(['amount', 'unit']);
     }
 }

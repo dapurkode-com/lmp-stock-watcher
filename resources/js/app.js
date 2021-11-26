@@ -31,6 +31,11 @@ Vue.component('idx-stock-list', require('./components/IdxStockListComponent.vue'
 Vue.component('crypto-list', require('./components/CryptoListComponent.vue').default);
 Vue.component('commodity-list', require('./components/CommodityListComponent.vue').default);
 
+Vue.component('hold-us-stock-list', require('./components/HoldUsStockListComponent.vue').default);
+Vue.component('hold-idx-stock-list', require('./components/HoldIdxStockListComponent.vue').default);
+Vue.component('hold-crypto-list', require('./components/HoldCryptoListComponent').default);
+Vue.component('hold-commodity-list', require('./components/HoldCommodityListComponent').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

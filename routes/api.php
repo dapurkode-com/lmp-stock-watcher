@@ -41,4 +41,26 @@ Route::middleware(['auth'])->group(function () {
         Route::post('remove-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'remove']);
         Route::post('remove-commodity', [\App\Http\Controllers\Api\CommodityController::class, 'remove']);
     });
+
+    Route::prefix('wallet')->group(function (){
+        Route::get('us-stocks', [\App\Http\Controllers\Api\HoldUsStockController::class, 'index']);
+        Route::get('idx-stocks', [\App\Http\Controllers\Api\HoldIdxStockController::class, 'index']);
+        Route::get('cryptos', [\App\Http\Controllers\Api\HoldCryptoController::class, 'index']);
+        Route::get('commodities', [\App\Http\Controllers\Api\HoldCommodityController::class, 'index']);
+
+        Route::get('get-resource-us-stock', [\App\Http\Controllers\Api\HoldUsStockController::class, 'getResource']);
+        Route::get('get-resource-idx-stock', [\App\Http\Controllers\Api\HoldIdxStockController::class, 'getResource']);
+        Route::get('get-resource-crypto', [\App\Http\Controllers\Api\HoldCryptoController::class, 'getResource']);
+        Route::get('get-resource-commodity', [\App\Http\Controllers\Api\HoldCommodityController::class, 'getResource']);
+
+        Route::post('store-us-stock', [\App\Http\Controllers\Api\HoldUsStockController::class, 'store']);
+        Route::post('store-idx-stock', [\App\Http\Controllers\Api\HoldIdxStockController::class, 'store']);
+        Route::post('store-crypto', [\App\Http\Controllers\Api\HoldCryptoController::class, 'store']);
+        Route::post('store-commodity', [\App\Http\Controllers\Api\HoldCommodityController::class, 'store']);
+
+        Route::post('remove-us-stock', [\App\Http\Controllers\Api\HoldUsStockController::class, 'remove']);
+        Route::post('remove-idx-stock', [\App\Http\Controllers\Api\HoldIdxStockController::class, 'remove']);
+        Route::post('remove-crypto', [\App\Http\Controllers\Api\HoldCryptoController::class, 'remove']);
+        Route::post('remove-commodity', [\App\Http\Controllers\Api\HoldCommodityController::class, 'remove']);
+    });
 });

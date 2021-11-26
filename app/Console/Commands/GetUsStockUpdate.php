@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Helpers\FinnhubHelper;
+use App\Helpers\NumberUtilHelper;
 use App\Helpers\RateHelper;
 use App\Models\WatchlistStockUs;
 use Carbon\Carbon;
@@ -60,8 +61,8 @@ class GetUsStockUpdate extends Command
                         [
                             'prev_day_close_price' => RateHelper::calcWithRate($rate, $content['pc'] ?? 0),
                             'current_price' => RateHelper::calcWithRate($rate, $content['c'] ?? 0),
-                            'change' => $content['d'] ?? 0,
-                            'percent_change' => $content['dp'] ?? 0,
+                            'change' => NumberUtilHelper::rounding($content['d']) ?? 0,
+                            'percent_change' =>  RateHelper::calcWithRate($rate,$content['dp']?? 0),
                             'last_updated' => $now
                         ]
                     );

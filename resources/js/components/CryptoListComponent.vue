@@ -12,7 +12,7 @@
                         </div>
                     </div>
 
-                    <div class="card-body p-0">
+                    <div class="card-body p-0 overflow-auto">
                         <b-overlay :show="isCardBusy" rounded="sm" no-wrap></b-overlay>
                         <b-table :fields="cryptoFields" :items="cryptos" show-empty>
                             <template #cell(prev_day_close_price)="data">
@@ -46,7 +46,7 @@
         </div>
 
         <b-modal id="modal-1" hide-footer scrollable size="lg"
-                 title="Add Crypto stock watchlist" @hide="resetResourceForm" @show="resetResourceForm">
+                 title="Add Cryptocurrency stock watchlist" @hide="resetResourceForm" @show="resetResourceForm">
             <b-overlay :show="isFormBusy" rounded="sm" no-wrap></b-overlay>
             <b-form @submit.stop.prevent="fetchStockResources">
                 <b-input-group class="mb-3">
@@ -90,9 +90,9 @@ export default {
                 {'key': 'id', 'label': '#'},
                 'symbol',
                 'name',
-                {'key': 'prev_day_close_price', 'label': 'Prev'},
-                {'key': 'current_price', 'label': 'Current'},
-                {'key': 'percent_change', 'label': '1d %'},
+                {'key': 'prev_day_close_price', 'label': 'Prev', 'tdClass': 'text-right'},
+                {'key': 'current_price', 'label': 'Current', 'tdClass': 'text-right'},
+                {'key': 'percent_change', 'label': '1d %', 'tdClass': 'text-right'},
                 {'key': 'actions', 'label': ''}
             ],
             query: '',
@@ -157,7 +157,7 @@ export default {
             }).then((response) => {
                 if (response.data.status) {
                     this.$bvToast.toast('Stock has been added to watchlist.', {
-                        title: `Crypto Watchlist`,
+                        title: `Cryptocurrency Watchlist`,
                         variant: 'success',
                         solid: true
                     })
@@ -165,7 +165,7 @@ export default {
                     this.fetchStocks()
                 } else {
                     this.$bvToast.toast('Something bad occur while adding to watchlist.', {
-                        title: `Crypto Watchlist`,
+                        title: `Cryptocurrency Watchlist`,
                         variant: 'danger',
                         solid: true
                     })
@@ -173,7 +173,7 @@ export default {
                 }
             }).catch((error) => {
                 this.$bvToast.toast('Something bad occur while adding to watchlist.', {
-                    title: `Crypto Watchlist`,
+                    title: `Cryptocurrency Watchlist`,
                     variant: 'danger',
                     solid: true
                 })
@@ -186,14 +186,14 @@ export default {
             }).then((response) => {
                 if (response.data.status) {
                     this.$bvToast.toast('Stock has been removed from watchlist.', {
-                        title: `Crypto Watchlist`,
+                        title: `Cryptocurrency Watchlist`,
                         variant: 'success',
                         solid: true
                     })
                     this.$delete(this.cryptos, index)
                 } else {
                     this.$bvToast.toast('Something bad occur while removing.', {
-                        title: `Crypto Watchlist`,
+                        title: `Cryptocurrency Watchlist`,
                         variant: 'danger',
                         solid: true
                     })
@@ -201,7 +201,7 @@ export default {
                 }
             }).catch((error) => {
                 this.$bvToast.toast('Something bad occur while removing.', {
-                    title: `Crypto Watchlist`,
+                    title: `Cryptocurrency Watchlist`,
                     variant: 'danger',
                     solid: true
                 })

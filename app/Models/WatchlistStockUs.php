@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -17,20 +19,22 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property float|null $change
  * @property float|null $percent_change
  * @property string|null $last_updated
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs query()
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs whereChange($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs whereCurrentPrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs whereLastUpdated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs wherePercentChange($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs wherePrevDayClosePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WatchlistStockUs whereSymbol($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $watchableUsers
+ * @method static Builder|WatchlistStockUs newModelQuery()
+ * @method static Builder|WatchlistStockUs newQuery()
+ * @method static Builder|WatchlistStockUs query()
+ * @method static Builder|WatchlistStockUs whereChange($value)
+ * @method static Builder|WatchlistStockUs whereCurrentPrice($value)
+ * @method static Builder|WatchlistStockUs whereId($value)
+ * @method static Builder|WatchlistStockUs whereLastUpdated($value)
+ * @method static Builder|WatchlistStockUs whereName($value)
+ * @method static Builder|WatchlistStockUs wherePercentChange($value)
+ * @method static Builder|WatchlistStockUs wherePrevDayClosePrice($value)
+ * @method static Builder|WatchlistStockUs whereSymbol($value)
+ * @mixin Eloquent
+ * @property-read Collection|User[] $watchableUsers
  * @property-read int|null $watchable_users_count
+ * @property-read Collection|\App\Models\User[] $holdableUsers
+ * @property-read int|null $holdable_users_count
  */
 class WatchlistStockUs extends Model
 {
@@ -61,5 +65,13 @@ class WatchlistStockUs extends Model
     public function watchableUsers(): MorphToMany
     {
         return $this->morphToMany(User::class, 'watchable');
+    }
+
+    /**
+     * @return MorphToMany|User[]
+     */
+    public function holdableUsers(): MorphToMany
+    {
+        return $this->morphToMany(User::class, 'holdable')->withPivot(['amount', 'unit']);
     }
 }

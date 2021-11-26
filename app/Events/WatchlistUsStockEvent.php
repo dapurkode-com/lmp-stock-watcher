@@ -27,6 +27,7 @@ class WatchlistUsStockEvent implements ShouldBroadcastNow
     {
         $this->usStock = $usStock;
         $this->getWatchableChannels();
+        $this->getHoldableChannels();
     }
 
     public function pushChannels(Channel $channel){
@@ -40,6 +41,17 @@ class WatchlistUsStockEvent implements ShouldBroadcastNow
             ->chunkById(100, function ($users){
                 foreach ($users as $user){
                     $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
+                }
+            });
+    }
+
+    public function getHoldableChannels(){
+        $this->usStock->holdableUsers()
+            ->select('id')
+            ->online()
+            ->chunkById(100, function ($users){
+                foreach ($users as $user){
+                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
                 }
             });
     }

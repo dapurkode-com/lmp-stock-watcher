@@ -52,11 +52,12 @@ class RateHelper
     /**
      * @param array $rate
      * @param $price
-     * @return float|int
+     * @return float
      */
-    static function calcWithRate(array $rate, $price){
+    static function calcWithRate(array $rate, $price): float
+    {
         if (gettype($price) == "string") $price = NumberUtilHelper::floatValue($price);
 
-        return $price / $rate['value'] * $rate['buy'];
+        return NumberUtilHelper::rounding($price / $rate['value'] * $rate['buy']);
     }
 }

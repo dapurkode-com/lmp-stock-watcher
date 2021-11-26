@@ -12,7 +12,7 @@
                         </div>
                     </div>
 
-                    <div class="card-body p-0">
+                    <div class="card-body p-0 overflow-auto">
                         <b-overlay :show="isCardBusy" no-wrap rounded="sm"></b-overlay>
                         <b-table :fields="stockFields" :items="stocks" show-empty>
                             <template #cell(prev_day_close_price)="data">
@@ -94,10 +94,10 @@ export default {
                 {'key': 'id', 'label': '#'},
                 'symbol',
                 'name',
-                {'key': 'prev_day_close_price', 'label': 'Prev'},
-                {'key': 'current_price', 'label': 'Current'},
-                'change',
-                {'key': 'percent_change', 'label': '1d %'},
+                {'key': 'prev_day_close_price', 'label': 'Prev', 'tdClass': 'text-right'},
+                {'key': 'current_price', 'label': 'Current', 'tdClass': 'text-right'},
+                {'key':'change', 'tdClass': 'text-right'},
+                {'key': 'percent_change', 'label': '1d %', 'tdClass': 'text-right'},
                 {'key': 'actions', 'label': ''}
             ],
             query: '',

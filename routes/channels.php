@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('watchlist.{userId}', function ($user, $userId) {
     return (int) $user->id === (int) $userId;
 });
+
+Broadcast::channel('my-wallet.{userId}', function ($user, $userId) {
+    return (int) $user->id === (int) $userId;
+});

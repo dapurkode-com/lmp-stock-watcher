@@ -230,34 +230,65 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
-        // Sidebar items:
-        ['header' => 'WATCHLIST'],
         [
-            'icon'          => 'fas fa-landmark mx-1',
+            'icon'          => 'nav-icon fas fa-tachometer-alt mx-1',
+            'text'          => 'Dashboard',
+            'url'           => '/'
+        ],
+        // Sidebar items:
+        ['header' => 'MY WALLET'],
+        [
+            'icon'          => 'nav-icon fas fa-landmark',
             'text'          => 'Stock',
             'submenu'       => [
                 [
-                    'icon'        => 'fas fa-caret-right ml-3 mr-1',
+                    'icon'        => 'nav-icon fas fa-caret-right ml-3',
                     'text'        => 'Indonesia Stock',
-                    'url'         => 'idx-stock-list',
+                    'url'         => '/my-wallet/idx-stock',
                 ],
                 [
-                    'icon'        => 'fas fa-caret-right ml-3 mr-1',
+                    'icon'        => 'nav-icon fas fa-caret-right ml-3',
                     'text'        => 'US Stock',
-                    'url'         => 'us-stock-list'
+                    'url'         => '/my-wallet/us-stock'
+                ],
+            ]
+        ],
+        [
+            'icon'          => 'nav-icon fas fa-coins',
+            'text'          => 'Cryptocurrency',
+            'url'           => '/my-wallet/crypto'
+        ],
+        [
+            'icon'          => 'fas fa-balance-scale nav-icon',
+            'text'          => 'Commodities',
+            'url'           => '/my-wallet/commodity'
+        ],
+        ['header' => 'WATCHLIST'],
+        [
+            'icon'          => 'fas fa-landmark nav-icon',
+            'text'          => 'Stock',
+            'submenu'       => [
+                [
+                    'icon'        => 'fas fa-caret-right ml-3 nav-icon',
+                    'text'        => 'Indonesia Stock',
+                    'url'         => '/watchlist/idx-stock',
+                ],
+                [
+                    'icon'        => 'fas fa-caret-right ml-3 nav-icon',
+                    'text'        => 'US Stock',
+                    'url'         => '/watchlist/us-stock'
                 ],
             ]
         ],
         [
             'icon'          => 'fas fa-coins mx-1',
             'text'          => 'Cryptocurrency',
-            'url'           => 'crypto-list'
+            'url'           => '/watchlist/crypto'
         ],
         [
             'icon'          => 'fas fa-balance-scale mx-1',
             'text'          => 'Commodities',
-            'url'           => 'commodity-list'
+            'url'           => '/watchlist/commodity'
         ],
     ],
 
