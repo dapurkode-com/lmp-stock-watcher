@@ -58,13 +58,13 @@
 
         {{-- Login field --}}
         <div class="row">
-            <div class="col-7">
-                <div class="icheck-primary">
-                    <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">{{ __('adminlte::adminlte.remember_me') }}</label>
-                </div>
+            <div class="col-6">
+                <a href="{{config('adminlte.dashboard_url')}}" class="btn btn-block btn-warning {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary')}}">
+                    <span class="fas fa-user"></span>
+                    Guest
+                </a>
             </div>
-            <div class="col-5">
+            <div class="col-6">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
                     {{ __('adminlte::adminlte.sign_in') }}

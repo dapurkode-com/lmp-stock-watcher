@@ -22,7 +22,7 @@ class HoldUsStockController extends Controller
     private User $selectedUser;
 
     public function __construct(){
-        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+        $this->selectedUser = User::email(config('app.admin_email'))->firstOrFail();
     }
 
     /**

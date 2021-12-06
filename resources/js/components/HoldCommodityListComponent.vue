@@ -1,14 +1,14 @@
 <template>
     <div class="container-fluid px-5">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-xl-3 d-none d-xl-inline">
                 <b-card title="Summary">
                     <b-card-body>
                         <doughnut-chart :chart-data="dataSet"></doughnut-chart>
                     </b-card-body>
                 </b-card>
             </div>
-            <div class="col-md-8">
+            <div class="col-sm-12 col-xl-9">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -44,7 +44,7 @@
                                     data.item.amount != null ? Number((data.item.amount * data.item.unit * data.item.current_price)).toLocaleString() : '-'
                                 }}
                             </template>
-                            <template v-if="user_id" #cell(actions)="row">
+                            <template #cell(actions)="row">
                                 <div class="float-right mr-1">
                                     <b-button class="mr-1" size="sm" title="Remove"
                                               variant="danger" @click="confirmRemoveDialog(row.item, row.index)">
@@ -120,7 +120,7 @@ export default {
                 {'key': 'percent_change', 'label': '1d %', 'tdClass': 'text-right'},
                 {'key': 'amount', 'label': 'Hold', 'tdClass': 'text-right'},
                 {'key': 'hold_price', 'tdClass': 'text-right'},
-                {'key': 'actions', 'label': ''}
+                {'key': 'actions', 'label': '', thClass: this.authColumn, tdClass: this.authColumn}
             ],
             query: '',
             commodityResources: [],
@@ -160,6 +160,12 @@ export default {
 
     },
     methods: {
+        authColumn(){
+            if(!this.user_id){
+                return 'd-none';
+            }
+            return '';
+        },
         dynamicColors() {
             let r = Math.floor(Math.random() * 255);
             let g = Math.floor(Math.random() * 255);

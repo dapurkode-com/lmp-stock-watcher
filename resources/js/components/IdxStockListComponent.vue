@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-xs-12">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -98,7 +98,7 @@ export default {
                 {'key': 'current_price', 'label': 'Current', 'tdClass': 'text-right'},
                 {'key':'change', 'tdClass': 'text-right'},
                 {'key': 'percent_change', 'label': '1d %', 'tdClass': 'text-right'},
-                {'key': 'actions', 'label': ''}
+                {'key': 'actions', 'label': '', thClass: this.authColumn, tdClass: this.authColumn}
             ],
             query: '',
             stockResources: [],
@@ -118,6 +118,12 @@ export default {
         this.listenForChanges();
     },
     methods: {
+        authColumn(){
+            if(!this.user_id){
+                return 'd-none';
+            }
+            return '';
+        },
         fetchStocks() {
             this.isCardBusy = true
             axios.get('/api/watchlist/idx-stocks').then((response) => {

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-xs-12">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -30,7 +30,7 @@
                                         data.item.percent_change != null ? Number(data.item.percent_change).toLocaleString() : '-'
                                     }}</span>
                             </template>
-                            <template #cell(actions)="row" v-if="user_id">
+                            <template #cell(actions)="row">
                                 <b-button class="mr-1 float-right" size="sm" title="Remove"
                                           variant="danger" @click="confirmRemoveDialog(row.item, row.index)">
                                     <i class="fas fa-trash"></i>
@@ -93,7 +93,7 @@ export default {
                 {'key': 'prev_day_close_price', 'label': 'Prev', 'tdClass': 'text-right'},
                 {'key': 'current_price', 'label': 'Current', 'tdClass': 'text-right'},
                 {'key': 'percent_change', 'label': '1d %', 'tdClass': 'text-right'},
-                {'key': 'actions', 'label': ''}
+                {'key': 'actions', 'label': '', thClass: this.authColumn, tdClass: this.authColumn}
             ],
             query: '',
             cryptoResources: [],
@@ -113,6 +113,12 @@ export default {
         this.listenForChanges();
     },
     methods: {
+        authColumn(){
+            if(!this.user_id){
+                return 'd-none';
+            }
+            return '';
+        },
         fetchStocks() {
             this.isCardBusy = true
             axios.get('/api/watchlist/cryptos').then((response) => {

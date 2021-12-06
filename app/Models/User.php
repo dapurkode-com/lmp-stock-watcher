@@ -36,8 +36,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
- * @method static Builder online()
- * @method static Builder email($email)
+ * @method static Builder|User online()
+ * @method static Builder|User email($email)
  */
 class User extends Authenticatable
 {
