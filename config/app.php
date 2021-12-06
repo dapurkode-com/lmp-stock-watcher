@@ -242,5 +242,7 @@ return [
     'coinmarketcap' => [
         'url' => env('COINMARKETCAP_URL'),
         'api_key' => env('COINMARKETCAP_KEY')
-    ]
+    ],
+
+    'admin_email' => env('ADMIN_EMAIL', 'admin@gmail.com')
 ];

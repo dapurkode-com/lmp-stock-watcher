@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SymbolRequest;
 use App\Http\Resources\StockResource;
 use App\Http\Resources\SymbolResource;
+use App\Models\User;
 use App\Models\WatchlistStockCommodity;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -19,13 +20,18 @@ class CommodityController extends Controller
 
     const WATCHABLE = "commodity";
 
+    private User $selectedUser;
+
+    public function __construct(){
+        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+    }
+
     /**
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $commodities = Auth::user()
-            ->watchlist(self::WATCHABLE)
+        $commodities = $this->selectedUser->watchlist(self::WATCHABLE)
             ->orderBy('id')
             ->get();
 
@@ -41,7 +47,7 @@ class CommodityController extends Controller
      */
     public function getResource(Request $request): JsonResponse
     {
-        $user_id = auth()->user()->id;
+        $user_id = $this->selectedUser->id;
         $query = Str::lower($request->input('query', ''));
         $commodityResources = DB::table('watchlist_stock_commodities')
             ->where(DB::raw('LOWER(name)'), 'like', "%$query%")
@@ -65,7 +71,7 @@ class CommodityController extends Controller
 
         $commodity = WatchlistStockCommodity::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->syncWithoutDetaching([$commodity->id]);
 
@@ -82,7 +88,7 @@ class CommodityController extends Controller
     public function remove(SymbolRequest $request):JsonResponse {
         $stock = WatchlistStockCommodity::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->detach([$stock->id]);
 

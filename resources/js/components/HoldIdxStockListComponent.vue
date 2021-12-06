@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title"><i class="fas fa-wallet"></i> Hold List</h3>
-                            <b-button v-b-modal.modal-1 size="sm" variant="outline-light"><i class="fas fa-plus"></i>
+                            <b-button v-if="user_id" v-b-modal.modal-1 size="sm" variant="outline-light"><i class="fas fa-plus"></i>
                                 Add Hold Stock
                             </b-button>
                         </div>
@@ -51,7 +51,7 @@
                                     data.item.amount != null ? Number((data.item.amount * data.item.unit * data.item.current_price)).toLocaleString() : '-'
                                 }}
                             </template>
-                            <template #cell(actions)="row">
+                            <template v-if="user_id" #cell(actions)="row">
                                 <div class="float-right mr-1">
                                     <b-button class="mr-1" size="sm" title="Remove"
                                               variant="danger" @click="confirmRemoveDialog(row.item, row.index)">
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <b-modal id="modal-1" hide-footer scrollable size="lg"
+        <b-modal v-if="user_id" id="modal-1" hide-footer scrollable size="lg"
                  title="Add Indonesia Stock to My Wallet" @hide="resetResourceForm" @show="resetResourceForm">
             <b-overlay :show="isFormBusy" no-wrap rounded="sm"></b-overlay>
             <b-form @submit.stop.prevent="fetchStockResources">
@@ -93,10 +93,10 @@
                 </b-table>
             </b-form>
         </b-modal>
-        <b-modal ref="delete-confirm" cancel-title="No" ok-title="Yes" ok-variant="danger" title="Remove Confirmation"
+        <b-modal v-if="user_id" ref="delete-confirm" cancel-title="No" ok-title="Yes" ok-variant="danger" title="Remove Confirmation"
                  @hide="confirmRemoveCallback">Are you sure to remove this ?
         </b-modal>
-        <b-modal ref="amount-form" ok-only
+        <b-modal v-if="user_id" ref="amount-form" ok-only
                  ok-title="Save" ok-variant="success"
                  title="How many do you have ?" @hide="resetUpdateForm"
                  @ok="store">
@@ -195,7 +195,7 @@ export default {
             })
         },
         listenForChanges() {
-            Echo.private('my-wallet.' + this.user_id)
+            Echo.channel('my-wallet')
                 .listen('WatchlistIdxStockEvent', (e) => {
                     console.log(e)
                     let stock = this.stocks.find((stock) => stock.id === e.id);

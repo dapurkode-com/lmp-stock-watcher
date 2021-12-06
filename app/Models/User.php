@@ -37,6 +37,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
  * @method static Builder online()
+ * @method static Builder email($email)
  */
 class User extends Authenticatable
 {
@@ -81,6 +82,16 @@ class User extends Authenticatable
     public function scopeOnline(Builder $query): Builder
     {
         return $query->whereRaw("EXISTS(SELECT * FROM sessions WHERE user_id = users.id)");
+    }
+
+    /**
+     * @param Builder $query
+     * @param string $email
+     * @return Builder
+     */
+    public function scopeEmail(Builder $query, string $email): Builder
+    {
+        return $query->where('email', $email);
     }
 
     /**

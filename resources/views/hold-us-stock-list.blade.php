@@ -23,5 +23,5 @@
 @stop
 
 @section('content')
-    <hold-us-stock-list user_id="{{auth()->user()->id}}"></hold-us-stock-list>
+    <hold-us-stock-list user_id="{{auth()->check() ? auth()->user()->id : null}}"></hold-us-stock-list>
 @stop

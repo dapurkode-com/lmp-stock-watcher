@@ -7,6 +7,7 @@ use App\Http\Requests\SymbolHoldRequest;
 use App\Http\Requests\SymbolRequest;
 use App\Http\Resources\StockResource;
 use App\Http\Resources\SymbolResource;
+use App\Models\User;
 use App\Models\WatchlistStockIdx;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -18,12 +19,18 @@ class HoldIdxStockController extends Controller
 {
     const HOLDABLE_TYPE = "idx-stock";
 
+    private User $selectedUser;
+
+    public function __construct(){
+        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+    }
+
     /**
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $stocks = Auth::user()
+        $stocks = $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->orderBy('id')
             ->get();
@@ -40,7 +47,7 @@ class HoldIdxStockController extends Controller
      */
     public function getResource(Request $request): JsonResponse
     {
-        $user_id = auth()->user()->id;
+        $user_id = $this->selectedUser->id;
         $keyword = Str::lower($request->input('query', ''));
         $stockResources = DB::table('watchlist_stock_idxes')
             ->whereRaw("not exists (select holdable_id from holdables where user_id = $user_id and holdable_id = watchlist_stock_idxes.id and holdable_type like '%WatchlistStockIdx%')")
@@ -65,7 +72,7 @@ class HoldIdxStockController extends Controller
 
         $stock = WatchlistStockIdx::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->syncWithoutDetaching([
                 $stock->id => ['amount' => $request->amount, 'unit'=> 100]
@@ -84,7 +91,7 @@ class HoldIdxStockController extends Controller
     public function remove(SymbolRequest $request):JsonResponse {
         $stock = WatchlistStockIdx::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->detach([$stock->id]);
 

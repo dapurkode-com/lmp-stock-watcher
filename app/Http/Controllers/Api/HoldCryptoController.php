@@ -7,6 +7,7 @@ use App\Http\Requests\SymbolHoldRequest;
 use App\Http\Requests\SymbolRequest;
 use App\Http\Resources\StockResource;
 use App\Http\Resources\SymbolResource;
+use App\Models\User;
 use App\Models\WatchlistStockCrypto;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -18,12 +19,18 @@ class HoldCryptoController extends Controller
 {
     const HOLDABLE_TYPE = "crypto";
 
+    private User $selectedUser;
+
+    public function __construct(){
+        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+    }
+
     /**
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $cryptos = Auth::user()
+        $cryptos = $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->orderBy('id')
             ->get();
@@ -40,7 +47,7 @@ class HoldCryptoController extends Controller
      */
     public function getResource(Request $request): JsonResponse
     {
-        $user_id = auth()->user()->id;
+        $user_id = $this->selectedUser->id;
         $keyword = Str::lower($request->input('query', ''));
         $cryptoResources = DB::table('watchlist_stock_cryptos')
             ->whereRaw("not exists (select holdable_id from holdables where user_id = $user_id and holdable_id = watchlist_stock_cryptos.id and holdable_type like '%WatchlistStockCrypto%')")
@@ -65,7 +72,7 @@ class HoldCryptoController extends Controller
 
         $crypto = WatchlistStockCrypto::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->syncWithoutDetaching([
                 $crypto->id => ['amount' => $request->amount]
@@ -84,7 +91,7 @@ class HoldCryptoController extends Controller
     public function remove(SymbolRequest $request):JsonResponse {
         $crypto = WatchlistStockCrypto::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->detach([$crypto->id]);
 

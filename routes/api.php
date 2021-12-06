@@ -18,14 +18,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('watchlist')->group(function (){
+    Route::get('us-stocks', [\App\Http\Controllers\Api\UsStockController::class, 'index']);
+    Route::get('idx-stocks', [\App\Http\Controllers\Api\IdxStockController::class, 'index']);
+    Route::get('cryptos', [\App\Http\Controllers\Api\CryptoController::class, 'index']);
+    Route::get('commodities', [\App\Http\Controllers\Api\CommodityController::class, 'index']);
+});
+
+Route::prefix('wallet')->group(function (){
+    Route::get('us-stocks', [\App\Http\Controllers\Api\HoldUsStockController::class, 'index']);
+    Route::get('idx-stocks', [\App\Http\Controllers\Api\HoldIdxStockController::class, 'index']);
+    Route::get('cryptos', [\App\Http\Controllers\Api\HoldCryptoController::class, 'index']);
+    Route::get('commodities', [\App\Http\Controllers\Api\HoldCommodityController::class, 'index']);
+});
+
 Route::middleware(['auth'])->group(function () {
 
     Route::prefix('watchlist')->group(function (){
-        Route::get('us-stocks', [\App\Http\Controllers\Api\UsStockController::class, 'index']);
-        Route::get('idx-stocks', [\App\Http\Controllers\Api\IdxStockController::class, 'index']);
-        Route::get('cryptos', [\App\Http\Controllers\Api\CryptoController::class, 'index']);
-        Route::get('commodities', [\App\Http\Controllers\Api\CommodityController::class, 'index']);
-
         Route::get('get-resource-us-stock', [\App\Http\Controllers\Api\UsStockController::class, 'getResource']);
         Route::get('get-resource-idx-stock', [\App\Http\Controllers\Api\IdxStockController::class, 'getResource']);
         Route::get('get-resource-crypto', [\App\Http\Controllers\Api\CryptoController::class, 'getResource']);
@@ -43,11 +52,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('wallet')->group(function (){
-        Route::get('us-stocks', [\App\Http\Controllers\Api\HoldUsStockController::class, 'index']);
-        Route::get('idx-stocks', [\App\Http\Controllers\Api\HoldIdxStockController::class, 'index']);
-        Route::get('cryptos', [\App\Http\Controllers\Api\HoldCryptoController::class, 'index']);
-        Route::get('commodities', [\App\Http\Controllers\Api\HoldCommodityController::class, 'index']);
-
         Route::get('get-resource-us-stock', [\App\Http\Controllers\Api\HoldUsStockController::class, 'getResource']);
         Route::get('get-resource-idx-stock', [\App\Http\Controllers\Api\HoldIdxStockController::class, 'getResource']);
         Route::get('get-resource-crypto', [\App\Http\Controllers\Api\HoldCryptoController::class, 'getResource']);

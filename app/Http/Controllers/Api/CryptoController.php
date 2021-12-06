@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SymbolRequest;
 use App\Http\Resources\StockResource;
 use App\Http\Resources\SymbolResource;
+use App\Models\User;
 use App\Models\WatchlistStockCrypto;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -17,12 +18,18 @@ class CryptoController extends Controller
 {
     const WATCHABLE = "crypto";
 
+    private User $selectedUser;
+
+    public function __construct(){
+        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+    }
+
     /**
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $cryptos = Auth::user()
+        $cryptos = $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->orderBy('id')
             ->get();
@@ -39,7 +46,7 @@ class CryptoController extends Controller
      */
     public function getResource(Request $request): JsonResponse
     {
-        $user_id = auth()->user()->id;
+        $user_id = $this->selectedUser->id;
         $keyword = Str::lower($request->input('query', ''));
         $cryptoResources = DB::table('watchlist_stock_cryptos')
             ->whereRaw("not exists (select watchable_id from watchables where user_id = $user_id and watchable_id = watchlist_stock_cryptos.id and watchable_type like '%WatchlistStockCrypto%')")
@@ -65,7 +72,7 @@ class CryptoController extends Controller
     {
         $crypto = WatchlistStockCrypto::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->syncWithoutDetaching([$crypto->id]);
 
@@ -83,7 +90,7 @@ class CryptoController extends Controller
     {
         $crypto = WatchlistStockCrypto::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->detach([$crypto->id]);
 

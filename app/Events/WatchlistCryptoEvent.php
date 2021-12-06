@@ -35,25 +35,33 @@ class WatchlistCryptoEvent implements ShouldBroadcastNow
     }
 
     public function getWatchableChannels(){
-        $this->stockCrypto->watchableUsers()
-            ->select('id')
-            ->online()
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
-                }
-            });
+//        $this->stockCrypto->watchableUsers()
+//            ->select('id')
+//            ->online()
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
+//                }
+//            });
+
+        if($this->stockCrypto->watchableUsers()->exists()){
+            $this->pushChannels(new Channel("watchlist"));
+        }
     }
 
     public function getHoldableChannels(){
-        $this->stockCrypto->holdableUsers()
-            ->select('id')
-            ->online()
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
-                }
-            });
+//        $this->stockCrypto->holdableUsers()
+//            ->select('id')
+//            ->online()
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
+//                }
+//            });
+
+        if($this->stockCrypto->holdableUsers()->exists()){
+            $this->pushChannels(new Channel("my-wallet"));
+        }
     }
 
     /**

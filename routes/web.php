@@ -21,23 +21,18 @@ Auth::routes();
 
 Route::redirect('/', '/home', 301);
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index']);
 
-Route::middleware(['auth'])->group(function () {
+Route::prefix('watchlist')->group(function () {
+    Route::get('us-stock', [\App\Http\Controllers\StockUsController::class, 'index']);
+    Route::get('idx-stock', [\App\Http\Controllers\IdxStockController::class, 'index']);
+    Route::get('crypto', [\App\Http\Controllers\CryptoController::class, 'index']);
+    Route::get('commodity', [\App\Http\Controllers\CommodityController::class, 'index']);
+});
 
-    Route::prefix('watchlist')->group(function () {
-        Route::get('us-stock', [\App\Http\Controllers\StockUsController::class, 'index']);
-        Route::get('idx-stock', [\App\Http\Controllers\IdxStockController::class, 'index']);
-        Route::get('crypto', [\App\Http\Controllers\CryptoController::class, 'index']);
-        Route::get('commodity', [\App\Http\Controllers\CommodityController::class, 'index']);
-    });
-
-    Route::prefix('my-wallet')->group(function (){
-        Route::get('us-stock', [\App\Http\Controllers\StockUsController::class, 'holdable']);
-        Route::get('idx-stock', [\App\Http\Controllers\IdxStockController::class, 'holdable']);
-        Route::get('crypto', [\App\Http\Controllers\CryptoController::class, 'holdable']);
-        Route::get('commodity', [\App\Http\Controllers\CommodityController::class, 'holdable']);
-    });
+Route::prefix('my-wallet')->group(function (){
+    Route::get('us-stock', [\App\Http\Controllers\StockUsController::class, 'holdable']);
+    Route::get('idx-stock', [\App\Http\Controllers\IdxStockController::class, 'holdable']);
+    Route::get('crypto', [\App\Http\Controllers\CryptoController::class, 'holdable']);
+    Route::get('commodity', [\App\Http\Controllers\CommodityController::class, 'holdable']);
 });

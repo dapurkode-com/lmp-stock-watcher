@@ -17,6 +17,6 @@ class NumberUtilHelper
 
     static function rounding($value): float
     {
-        return round($value, 2);
+        return round($value, 0);
     }
 }

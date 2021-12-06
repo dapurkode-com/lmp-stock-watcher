@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SymbolHoldRequest;
 use App\Http\Requests\SymbolRequest;
 use App\Http\Resources\StockResource;
+use App\Models\User;
 use App\Models\WatchlistStockUs;
 use Auth;
 use GuzzleHttp\Exception\BadResponseException;
@@ -18,12 +19,18 @@ class HoldUsStockController extends Controller
 {
     const HOLDABLE_TYPE = "us-stock";
 
+    private User $selectedUser;
+
+    public function __construct(){
+        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+    }
+
     /**
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $stocks = Auth::user()
+        $stocks = $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->orderBy('id')
             ->get();
@@ -47,7 +54,7 @@ class HoldUsStockController extends Controller
                 ]
             );
 
-            $myUsStocks = Auth::user()
+            $myUsStocks = $this->selectedUser
                 ->holdList(self::HOLDABLE_TYPE)
                 ->select('symbol')
                 ->get();
@@ -86,7 +93,7 @@ class HoldUsStockController extends Controller
 
         $stock = WatchlistStockUs::firstOrCreate(['symbol' => $request->symbol], ['name' => $request->name]);
 
-        Auth::user()
+        $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->syncWithoutDetaching([
                 $stock->id => ['amount' => $request->amount]
@@ -106,7 +113,7 @@ class HoldUsStockController extends Controller
     {
         $stock = WatchlistStockUs::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->holdList(self::HOLDABLE_TYPE)
             ->detach([$stock->id]);
 

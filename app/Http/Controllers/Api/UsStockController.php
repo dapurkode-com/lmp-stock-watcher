@@ -6,6 +6,7 @@ use App\Helpers\FinnhubHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SymbolRequest;
 use App\Http\Resources\StockResource;
+use App\Models\User;
 use App\Models\WatchlistStockUs;
 use Auth;
 use GuzzleHttp\Exception\BadResponseException;
@@ -18,12 +19,18 @@ class UsStockController extends Controller
 
     const WATCHABLE = "us-stock";
 
+    private User $selectedUser;
+
+    public function __construct(){
+        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+    }
+
     /**
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $stocks = Auth::user()
+        $stocks = $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->orderBy('id')
             ->get();
@@ -47,7 +54,7 @@ class UsStockController extends Controller
                 ]
             );
 
-            $myUsStocks = Auth::user()
+            $myUsStocks = $this->selectedUser
                 ->watchlist(self::WATCHABLE)
                 ->get();
 
@@ -85,7 +92,7 @@ class UsStockController extends Controller
 
         $stock = WatchlistStockUs::firstOrCreate(['symbol' => $request->symbol], ['name' => $request->name]);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->syncWithoutDetaching([$stock->id]);
 
@@ -103,7 +110,7 @@ class UsStockController extends Controller
     {
         $stock = WatchlistStockUs::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->detach([$stock->id]);
 

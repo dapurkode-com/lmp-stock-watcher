@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SymbolRequest;
 use App\Http\Resources\StockResource;
 use App\Http\Resources\SymbolResource;
+use App\Models\User;
 use App\Models\WatchlistStockIdx;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -17,12 +18,18 @@ class IdxStockController extends Controller
 {
     const WATCHABLE = "idx-stock";
 
+    private User $selectedUser;
+
+    public function __construct(){
+        $this->selectedUser = Auth::check() ? Auth::user() : User::email(config('app.admin_email'))->firstOrFail();
+    }
+
     /**
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $stocks = Auth::user()
+        $stocks = $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->orderBy('id')
             ->get();
@@ -39,7 +46,7 @@ class IdxStockController extends Controller
      */
     public function getResource(Request $request): JsonResponse
     {
-        $user_id = auth()->user()->id;
+        $user_id = $this->selectedUser->id;
         $keyword = Str::lower($request->input('query', ''));
         $stockResources = DB::table('watchlist_stock_idxes')
             ->whereRaw("not exists (select watchable_id from watchables where user_id = $user_id and watchable_id = watchlist_stock_idxes.id and watchable_type like '%WatchlistStockIdx%')")
@@ -65,7 +72,7 @@ class IdxStockController extends Controller
 
         $stock = WatchlistStockIdx::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->syncWithoutDetaching([$stock->id]);
 
@@ -82,7 +89,7 @@ class IdxStockController extends Controller
     public function remove(SymbolRequest $request):JsonResponse {
         $stock = WatchlistStockIdx::findOrFail($request->id);
 
-        Auth::user()
+        $this->selectedUser
             ->watchlist(self::WATCHABLE)
             ->detach([$stock->id]);
 

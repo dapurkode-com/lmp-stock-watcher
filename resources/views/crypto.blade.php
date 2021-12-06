@@ -22,5 +22,5 @@
 @stop
 
 @section('content')
-    <crypto-list user_id="{{auth()->user()->id}}"></crypto-list>
+    <crypto-list user_id="{{auth()->check() ? auth()->user()->id : null}}"></crypto-list>
 @stop

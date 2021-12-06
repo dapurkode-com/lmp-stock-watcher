@@ -35,25 +35,33 @@ class WatchlistUsStockEvent implements ShouldBroadcastNow
     }
 
     public function getWatchableChannels(){
-        $this->usStock->watchableUsers()
-            ->select('id')
-            ->online()
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
-                }
-            });
+//        $this->usStock->watchableUsers()
+//            ->select('id')
+//            ->online()
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
+//                }
+//            });
+
+        if($this->usStock->watchableUsers()->exists()){
+            $this->pushChannels(new Channel("watchlist"));
+        }
     }
 
     public function getHoldableChannels(){
-        $this->usStock->holdableUsers()
-            ->select('id')
-            ->online()
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
-                }
-            });
+//        $this->usStock->holdableUsers()
+//            ->select('id')
+//            ->online()
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
+//                }
+//            });
+
+        if($this->usStock->holdableUsers()->exists()){
+            $this->pushChannels(new Channel("my-wallet"));
+        }
     }
 
     /**

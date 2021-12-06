@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title"><i class="fas fa-eye"></i> Watchlist</h3>
-                            <b-button v-b-modal.modal-1 size="sm" variant="outline-light"><i class="fas fa-plus"></i>
+                            <b-button v-if="user_id" v-b-modal.modal-1 size="sm" variant="outline-light"><i class="fas fa-plus"></i>
                                 Add Watchlist
                             </b-button>
                         </div>
@@ -30,7 +30,7 @@
                                         data.item.percent_change != null ? Number(data.item.percent_change).toLocaleString() : '-'
                                     }}</span>
                             </template>
-                            <template #cell(actions)="row">
+                            <template #cell(actions)="row" v-if="user_id">
                                 <b-button class="mr-1 float-right" size="sm" title="Remove"
                                           variant="danger" @click="confirmRemoveDialog(row.item, row.index)">
                                     <i class="fas fa-trash"></i>
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <b-modal id="modal-1" hide-footer scrollable size="lg"
+        <b-modal v-if="user_id" id="modal-1" hide-footer scrollable size="lg"
                  title="Add Cryptocurrency watchlist" @hide="resetResourceForm" @show="resetResourceForm">
             <b-overlay :show="isFormBusy" rounded="sm" no-wrap></b-overlay>
             <b-form @submit.stop.prevent="fetchStockResources">
@@ -68,7 +68,7 @@
             </b-form>
         </b-modal>
 
-        <b-modal ref="delete-confirm" cancel-title="No" ok-title="Yes" ok-variant="danger" title="Remove Confirmation"
+        <b-modal v-if="user_id" ref="delete-confirm" cancel-title="No" ok-title="Yes" ok-variant="danger" title="Remove Confirmation"
                  @hide="confirmRemoveCallback">Are you sure to remove this ?
         </b-modal>
     </div>
@@ -121,7 +121,7 @@ export default {
             })
         },
         listenForChanges() {
-            Echo.private('watchlist.' + this.user_id)
+            Echo.channel('watchlist')
                 .listen('WatchlistCryptoEvent', (e) => {
                     console.log(e);
                     let stock = this.cryptos.find((stock) => stock.id === e.id);

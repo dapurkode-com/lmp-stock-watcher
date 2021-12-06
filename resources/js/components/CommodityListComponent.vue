@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title"><i class="fas fa-eye"></i> Watchlist</h3>
-                            <b-button v-b-modal.modal-1 size="sm" variant="outline-light"><i class="fas fa-plus"></i>
+                            <b-button v-if="user_id" v-b-modal.modal-1 size="sm" variant="outline-light"><i class="fas fa-plus"></i>
                                 Add Watchlist
                             </b-button>
                         </div>
@@ -36,7 +36,7 @@
                                         data.item.percent_change != null ? Number(data.item.percent_change).toLocaleString() : '-'
                                     }}</span>
                             </template>
-                            <template #cell(actions)="row">
+                            <template #cell(actions)="row" v-if="user_id">
                                 <b-button class="mr-1 float-right" size="sm" variant="danger"
                                           @click="confirmRemoveDialog(row.item, row.index)" title="Remove">
                                     <i class="fas fa-trash"></i>
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <b-modal id="modal-1" hide-footer size="lg" title="Add Commodity watchlist"
+        <b-modal v-if="user_id" id="modal-1" hide-footer size="lg" title="Add Commodity watchlist"
                  @hide="resetResourceForm" @show="resetResourceForm" scrollable>
             <b-overlay :show="isFormBusy" rounded="sm" no-wrap></b-overlay>
             <b-form @submit.stop.prevent="fetchStockResources">
@@ -71,7 +71,7 @@
                 </b-table>
             </b-form>
         </b-modal>
-        <b-modal ref="delete-confirm" title="Remove Confirmation" ok-variant="danger" ok-title="Yes" cancel-title="No"
+        <b-modal v-if="user_id" ref="delete-confirm" title="Remove Confirmation" ok-variant="danger" ok-title="Yes" cancel-title="No"
                  @hide="confirmRemoveCallback">Are you sure to remove this ?</b-modal>
     </div>
 </template>
@@ -138,7 +138,7 @@
                 this.commodityResources = []
             },
             listenForChanges() {
-                Echo.private('watchlist.' + this.user_id)
+                Echo.channel('watchlist')
                     .listen('WatchlistCommodityEvent', (e) => {
                         let commodity = this.commodities.find((commodity) => commodity.name === e.name);
                         if (commodity) {

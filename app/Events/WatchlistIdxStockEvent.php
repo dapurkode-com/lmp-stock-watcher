@@ -35,25 +35,33 @@ class WatchlistIdxStockEvent implements ShouldBroadcastNow
     }
 
     public function getWatchableChannels(){
-        $this->idxStock->watchableUsers()
-            ->online()
-            ->select('id')
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
-                }
-            });
+//        $this->idxStock->watchableUsers()
+//            ->online()
+//            ->select('id')
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
+//                }
+//            });
+
+        if($this->idxStock->watchableUsers()->exists()){
+            $this->pushChannels(new Channel("watchlist"));
+        }
     }
 
     public function getHoldableChannels(){
-        $this->idxStock->holdableUsers()
-            ->select('id')
-            ->online()
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
-                }
-            });
+//        $this->idxStock->holdableUsers()
+//            ->select('id')
+//            ->online()
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
+//                }
+//            });
+
+        if($this->idxStock->holdableUsers()->exists()){
+            $this->pushChannels(new Channel("my-wallet"));
+        }
     }
 
     /**

@@ -22,5 +22,5 @@
 @stop
 
 @section('content')
-    <commodity-list user_id="{{auth()->user()->id}}"></commodity-list>
+    <commodity-list user_id="{{auth()->check() ? auth()->user()->id : null}}"></commodity-list>
 @stop

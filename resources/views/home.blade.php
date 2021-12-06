@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'My Wallet - US Stock')
+@section('title', 'Dashboard')
 
 @section('content_header')
     <div class="container-fluid">
@@ -21,5 +21,5 @@
 @stop
 
 @section('content')
-    <my-dashboard user_id="{{auth()->user()->id}}"></my-dashboard>
+    <my-dashboard user_id="{{auth()->check() ? auth()->user()->id : null}}"></my-dashboard>
 @stop

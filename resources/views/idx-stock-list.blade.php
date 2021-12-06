@@ -23,5 +23,5 @@
 @stop
 
 @section('content')
-    <idx-stock-list user_id="{{auth()->user()->id}}"></idx-stock-list>
+    <idx-stock-list user_id="{{auth()->check() ? auth()->user()->id : null}}"></idx-stock-list>
 @stop

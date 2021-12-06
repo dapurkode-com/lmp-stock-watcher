@@ -63,31 +63,10 @@
             <!-- ./col -->
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <b-card title="Summary Commodities">
-                    <b-card-body>
-                        <doughnut-chart :chart-data="commodityDataSet"></doughnut-chart>
-                    </b-card-body>
-                </b-card>
-            </div>
-            <div class="col-md-3">
-                <b-card title="Summary Cryptocurrency">
-                    <b-card-body>
-                        <doughnut-chart :chart-data="cryptoDataSet"></doughnut-chart>
-                    </b-card-body>
-                </b-card>
-            </div>
-            <div class="col-md-3">
-                <b-card title="Summary US Stock">
-                    <b-card-body>
-                        <doughnut-chart :chart-data="usDataSet"></doughnut-chart>
-                    </b-card-body>
-                </b-card>
-            </div>
-            <div class="col-md-3">
-                <b-card title="Summary Indonesia Stock">
-                    <b-card-body>
-                        <doughnut-chart :chart-data="idxDataSet"></doughnut-chart>
+            <div class="col-sm-12">
+                <b-card title="Summary">
+                    <b-card-body class="col-sm-12 col-xl-4 offset-xl-4">
+                        <doughnut-chart :chart-data="summaryDataSet"></doughnut-chart>
                     </b-card-body>
                 </b-card>
             </div>
@@ -159,7 +138,7 @@ export default {
             })
         },
         listenForChanges() {
-            Echo.private('my-wallet.' + this.user_id)
+            Echo.channel('my-wallet')
                 .listen('WatchlistUsStockEvent', (e) => {
                     console.log("WatchlistUsStockEvent: ")
                     console.log(e)
@@ -229,62 +208,20 @@ export default {
         sumIdxStock: function(){
             return this.idxStocks.map(a => a.amount * a.unit * a.current_price).reduce((prev, next) => prev + next, 0)
         },
-        idxDataSet: function () {
-            let labels = this.idxStocks.map(a => a.name)
-            let data = this.idxStocks.map(a => (a.amount * a.unit * a.current_price).toFixed(2))
-            let backgrounds = this.idxStocks.map(() => this.dynamicColors())
+        summaryDataSet: function () {
+            let labels = ['Commodity', 'Cryptocurrency', 'Indonesian Stock', 'US Stock']
+            let data = [this.sumCommodity, this.sumCrypto, this.sumIdxStock, this.sumUsStock]
+            let backgrounds = ['#0275d8', '#5cb85c', '#d9534f', '#f0ad4e' ]
             return {
                 datasets: [{
-                    label: 'Summary Indonesia Stock',
+                    label: 'Summary',
                     data: data,
                     backgroundColor: backgrounds,
                     hoverOffset: 4
                 }],
                 labels: labels
             }
-        },
-        usDataSet: function () {
-            let labels = this.usStocks.map(a => a.name)
-            let data = this.usStocks.map(a => (a.amount * a.unit * a.current_price).toFixed(2))
-            let backgrounds = this.usStocks.map(() => this.dynamicColors())
-            return {
-                datasets: [{
-                    label: 'Summary Us Stock',
-                    data: data,
-                    backgroundColor: backgrounds,
-                    hoverOffset: 4
-                }],
-                labels: labels
-            }
-        },
-        cryptoDataSet: function () {
-            let labels = this.cryptos.map(a => a.name)
-            let data = this.cryptos.map(a => (a.amount * a.unit * a.current_price).toFixed(2))
-            let backgrounds = this.cryptos.map(() => this.dynamicColors())
-            return {
-                datasets: [{
-                    label: 'Summary Crypto',
-                    data: data,
-                    backgroundColor: backgrounds,
-                    hoverOffset: 4
-                }],
-                labels: labels
-            }
-        },
-        commodityDataSet: function () {
-            let labels = this.commodities.map(a => a.name)
-            let data = this.commodities.map(a => (a.amount * a.unit * a.current_price).toFixed(2))
-            let backgrounds = this.commodities.map(() => this.dynamicColors())
-            return {
-                datasets: [{
-                    label: 'Summary Commodity',
-                    data: data,
-                    backgroundColor: backgrounds,
-                    hoverOffset: 4
-                }],
-                labels: labels
-            }
-        },
+        }
     }
 }
 </script>

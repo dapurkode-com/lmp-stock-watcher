@@ -36,25 +36,33 @@ class WatchlistCommodityEvent implements ShouldBroadcastNow
     }
 
     public function getWatchableChannels(){
-        $this->stockCommodity->watchableUsers()
-            ->select('id')
-            ->online()
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
-                }
-            });
+//        $this->stockCommodity->watchableUsers()
+//            ->select('id')
+//            ->online()
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("watchlist." . $user->id));
+//                }
+//            });
+
+        if($this->stockCommodity->watchableUsers()->exists()){
+            $this->pushChannels(new Channel("watchlist"));
+        }
     }
 
     public function getHoldableChannels(){
-        $this->stockCommodity->holdableUsers()
-            ->select('id')
-            ->online()
-            ->chunkById(100, function ($users){
-                foreach ($users as $user){
-                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
-                }
-            });
+//        $this->stockCommodity->holdableUsers()
+//            ->select('id')
+//            ->online()
+//            ->chunkById(100, function ($users){
+//                foreach ($users as $user){
+//                    $this->pushChannels(new PrivateChannel("my-wallet." . $user->id));
+//                }
+//            });
+
+        if($this->stockCommodity->holdableUsers()->exists()){
+            $this->pushChannels(new Channel("my-wallet"));
+        }
     }
 
     /**
