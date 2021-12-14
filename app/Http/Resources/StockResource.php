@@ -11,7 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
+
 /**
+ *
+ * @package App\Http\Resources
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
  *
  * @property-read Holdable $pivot
  *
@@ -23,7 +27,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class StockResource extends JsonResource
 {
-
     /**
      * Transform the resource into an array.
      *

@@ -8,6 +8,14 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 
+/**
+ * GetCryptoPrice is a command class that used to
+ * gathering cryptocurrency price from scraping Indodax site
+ *
+ * @package Commands
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ * @deprecated due updating cryptoprice with REST API coin market cap
+ */
 class GetCryptoPrice extends Command
 {
     /**

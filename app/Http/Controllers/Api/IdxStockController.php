@@ -8,12 +8,17 @@ use App\Http\Resources\StockResource;
 use App\Http\Resources\SymbolResource;
 use App\Models\User;
 use App\Models\WatchlistStockIdx;
-use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+/**
+ * @package App\Http\Controllers\Api
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ *
+ * @OA\Tag(name="Watchlist Idx Controller")
+ */
 class IdxStockController extends Controller
 {
     const WATCHABLE = "idx-stock";
@@ -25,6 +30,31 @@ class IdxStockController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/watchlist/idx-stocks",
+     *      tags={"Watchlist Idx Controller", "Watchlist Index"},
+     *      summary="Collection of watchlist idx stocks raw data",
+     *      operationId="watchlistIdxIndex",
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Collections of idx stocks",
+     *          @OA\JsonContent(
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="array", property="stocks", @OA\Items(
+     *                  @OA\Property(property="id", type="integer", description="Id of collection", example=1),
+     *                  @OA\Property(property="symbol", type="string", description="Symbol of stock", example="TSLA"),
+     *                  @OA\Property(property="name", type="string", description="Name of stock", example="Tesla Inc"),
+     *                  @OA\Property(property="prev_day_close_price", type="number", description="Previous close day price", example="26136251"),
+     *                  @OA\Property(property="current_price", type="number", description="Current price", example="25666841"),
+     *                  @OA\Property(property="change", type="number", description="Deviation between current and previous close day price", example="239983"),
+     *                  @OA\Property(property="percent_change", type="number", description="Deviation in percent", example="0.94"),
+     *                  @OA\Property(property="last_updated", type="date", description="Last data updated", example="2020-12-10 10:10:00"),
+     *              )),
+     *          )
+     *      ),
+     * )
+     *
      * @return JsonResponse
      */
     public function index(): JsonResponse
@@ -41,6 +71,40 @@ class IdxStockController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/watchlist/get-resource-idx-stock",
+     *      tags={"Watchlist Idx Controller", "Watchlist Get Resource"},
+     *      summary="Idx stocks that avaiable to add on watchlist",
+     *      operationId="watchlistIdxGetResource",
+     *
+     *      @OA\Parameter(
+     *          name="query",
+     *          in="query",
+     *          description="Searching keyword",
+     *          allowEmptyValue=true,
+     *          @OA\Schema(
+     *              type="string"
+     *         )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Collections of stockResources",
+     *          @OA\JsonContent(
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="array", property="stockResources", @OA\Items(
+     *                  @OA\Property(property="id", type="integer", description="Id of collection", example=1),
+     *                  @OA\Property(property="symbol", type="string", description="Symbol of stock", example="TSLA"),
+     *                  @OA\Property(property="name", type="string", description="Name of stock", example="Tesla Inc"),
+     *              )),
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorize"
+     *      )
+     * )
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -64,6 +128,33 @@ class IdxStockController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/watchlist/store-idx-stock",
+     *      tags={"Watchlist Idx Controller", "Watchlist Store"},
+     *      summary="Add idx stock to watchlist",
+     *      operationId="watchlistIdxStore",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(@OA\Property(type="number", property="id"))
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error"
+     *      ),
+     * )
+     *
      * @param SymbolRequest $request
      * @return JsonResponse
      */
@@ -83,6 +174,33 @@ class IdxStockController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/watchlist/remove-idx-stock",
+     *      tags={"Watchlist Idx Controller", "Watchlist Remove"},
+     *      summary="Remove idx stock from watchlist",
+     *      operationId="watchlistIdxRemove",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(@OA\Property(type="number", property="id"))
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error"
+     *      ),
+     * )
+     *
      * @param SymbolRequest $request
      * @return JsonResponse
      */

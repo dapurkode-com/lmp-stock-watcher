@@ -35,18 +35,19 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // trigger broadcast event when IDX stock updated
         WatchlistStockIdx::updated(function($stock){
             event(new WatchlistIdxStockEvent($stock));
         });
-
+        // trigger broadcast event when US stock updated
         WatchlistStockUs::updated(function($stock){
             event(new WatchlistUsStockEvent($stock));
         });
-
+        // trigger broadcast event when cryptocurrency updated
         WatchlistStockCrypto::updated(function($crypto){
             event(new WatchlistCryptoEvent($crypto));
         });
-
+        // trigger broadcast event when commodity updated
         WatchlistStockCommodity::updated(function($commodity){
             event(new WatchlistCommodityEvent($commodity));
         });

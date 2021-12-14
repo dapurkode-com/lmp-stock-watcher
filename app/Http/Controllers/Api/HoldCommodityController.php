@@ -9,12 +9,17 @@ use App\Http\Resources\StockResource;
 use App\Http\Resources\SymbolResource;
 use App\Models\User;
 use App\Models\WatchlistStockCommodity;
-use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+/**
+ * @package App\Http\Controllers\Api
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ *
+ * @OA\Tag(name="Holdlist Commodity Controller")
+ */
 class HoldCommodityController extends Controller
 {
     const HOLDABLE_TYPE = "commodity";
@@ -26,6 +31,33 @@ class HoldCommodityController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/wallet/commodities",
+     *      tags={"Holdlist Commodity Controller", "Holdlist Index"},
+     *      summary="Collection of holdlist commodities raw data",
+     *      operationId="holdlistCommodityIndex",
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Collections of commodities",
+     *          @OA\JsonContent(
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="array", property="stocks", @OA\Items(
+     *                  @OA\Property(property="id", type="integer", description="Id of collection", example=1),
+     *                  @OA\Property(property="symbol", type="string", description="Symbol of stock", example="TSLA"),
+     *                  @OA\Property(property="name", type="string", description="Name of stock", example="Tesla Inc"),
+     *                  @OA\Property(property="prev_day_close_price", type="number", description="Previous close day price", example="26136251"),
+     *                  @OA\Property(property="current_price", type="number", description="Current price", example="25666841"),
+     *                  @OA\Property(property="change", type="number", description="Deviation between current and previous close day price", example="239983"),
+     *                  @OA\Property(property="percent_change", type="number", description="Deviation in percent", example="0.94"),
+     *                  @OA\Property(property="last_updated", type="date", description="Last data updated", example="2020-12-10 10:10:00"),
+     *                  @OA\Property(property="amount", type="number", description="Amount of hold stock", example="5"),
+     *                  @OA\Property(property="unit", type="number", description="Multiplier of stock and unit", example="1"),
+     *              )),
+     *          )
+     *      ),
+     * )
+     *
      * @return JsonResponse
      */
     public function index(): JsonResponse
@@ -42,6 +74,39 @@ class HoldCommodityController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/wallet/get-resource-commodity",
+     *      tags={"Holdlist Commodity Controller", "Holdlist Get Resource"},
+     *      summary="Commodities that avaiable to add on holdlist",
+     *      operationId="holdlistCommoditiesGetResource",
+     *
+     *      @OA\Parameter(
+     *          name="query",
+     *          in="query",
+     *          description="Searching keyword",
+     *          allowEmptyValue=true,
+     *          @OA\Schema(
+     *              type="string"
+     *         )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Collections of commodities",
+     *          @OA\JsonContent(
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="array", property="commodityResources", @OA\Items(
+     *                  @OA\Property(property="id", type="integer", description="Id of collection", example=1),
+     *                  @OA\Property(property="name", type="string", description="Name of stock", example="Gold"),
+     *              )),
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorize"
+     *      )
+     * )
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -63,6 +128,36 @@ class HoldCommodityController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/wallet/store-commodity",
+     *      tags={"Holdlist Commodity Controller", "Holdlist Store"},
+     *      summary="Add commodity to holdlist",
+     *      operationId="holdlistCommoditiesStore",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(type="number", property="id"),
+     *              @OA\Property(type="number", property="amount")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error"
+     *      ),
+     * )
+     *
      * @param SymbolHoldRequest $request
      * @return JsonResponse
      */
@@ -82,6 +177,33 @@ class HoldCommodityController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/wallet/remove-commodity",
+     *      tags={"Holdlist Commodity Controller", "Holdlist Remove"},
+     *      summary="Remove commodity from holdlist",
+     *      operationId="holdlistCommoditiesRemove",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(@OA\Property(type="number", property="id"))
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error"
+     *      ),
+     * )
+     *
      * @param SymbolRequest $request
      * @return JsonResponse
      */

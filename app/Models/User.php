@@ -74,7 +74,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get online user
+     * Custom query scope to get online user
      *
      * @param Builder $query
      * @return Builder
@@ -85,6 +85,8 @@ class User extends Authenticatable
     }
 
     /**
+     * Custom query scope to get user from specific email
+     *
      * @param Builder $query
      * @param string $email
      * @return Builder
@@ -95,6 +97,7 @@ class User extends Authenticatable
     }
 
     /**
+     * Get watchlist stock
      *
      * @param string $watchableType
      * @return MorphToMany
@@ -117,6 +120,7 @@ class User extends Authenticatable
     }
 
     /**
+     * Get my wallet list stock
      *
      * @param string $holdableType
      * @return MorphToMany|Holdable

@@ -5,6 +5,15 @@ namespace App\Console\Commands;
 use DB;
 use Illuminate\Console\Command;
 
+/**
+ * IdleSessionRemover is a command class that used to
+ * remove idle user's sessions
+ *
+ * @package Commands
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ * @deprecated due private pocket disabled
+ *
+ */
 class IdleSessionRemover extends Command
 {
     /**

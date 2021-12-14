@@ -126,7 +126,7 @@ export default {
         fetchStocks() {
             this.isCardBusy = true
             axios.get('/api/watchlist/us-stocks').then((response) => {
-                this.stocks = response.data.data;
+                this.stocks = response.data.stocks;
                 this.isCardBusy = false
             })
         },

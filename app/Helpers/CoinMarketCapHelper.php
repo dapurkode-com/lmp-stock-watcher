@@ -5,6 +5,12 @@ namespace App\Helpers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ * CoinMarketCapHelper is a halper class for request Coin Market Cap
+ *
+ * @package App\Helpers
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ */
 class CoinMarketCapHelper
 {
     /**

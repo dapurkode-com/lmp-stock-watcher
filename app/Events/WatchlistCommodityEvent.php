@@ -36,6 +36,7 @@ class WatchlistCommodityEvent implements ShouldBroadcastNow
     }
 
     public function getWatchableChannels(){
+//        == DISABLED DUE PRIVATE WATCHLIST AND PRIVATE WALLET DISABLED
 //        $this->stockCommodity->watchableUsers()
 //            ->select('id')
 //            ->online()
@@ -51,6 +52,7 @@ class WatchlistCommodityEvent implements ShouldBroadcastNow
     }
 
     public function getHoldableChannels(){
+//        == DISABLED DUE PRIVATE WATCHLIST AND PRIVATE WALLET DISABLED
 //        $this->stockCommodity->holdableUsers()
 //            ->select('id')
 //            ->online()

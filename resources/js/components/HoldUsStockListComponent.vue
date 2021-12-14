@@ -14,7 +14,7 @@
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title"><i class="fas fa-wallet"></i> Hold List</h3>
                             <b-button v-if="user_id" v-b-modal.modal-1 size="sm" variant="outline-light"><i class="fas fa-plus"></i>
-                                Add Hold Stock
+                                Hold
                             </b-button>
                         </div>
                     </div>

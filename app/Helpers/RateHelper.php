@@ -8,6 +8,12 @@ use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DomCrawler\Crawler;
 use function PHPUnit\Framework\throwException;
 
+/**
+ * RateHelper is a helper class for getting BI current sell/buy price rate
+ *
+ * @package App\Helpers
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ */
 class RateHelper
 {
     /**

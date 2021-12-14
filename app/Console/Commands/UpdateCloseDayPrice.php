@@ -6,6 +6,14 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * UpdateCloseDayPrice is a command class that used to
+ * update prev_day_close_price on table watchlist_stock_cryptos when days changed
+ *
+ * @package Commands
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ *
+ */
 class UpdateCloseDayPrice extends Command
 {
     /**
@@ -40,7 +48,6 @@ class UpdateCloseDayPrice extends Command
     public function handle(): int
     {
         try {
-            DB::update("UPDATE watchlist_stock_commodities SET prev_day_close_price = current_price");
             DB::update("UPDATE watchlist_stock_cryptos SET prev_day_close_price = current_price");
             return 1;
         } catch (Exception $e) {

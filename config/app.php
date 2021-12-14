@@ -175,7 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-
+        /*
+         * Custom Service Provider
+         */
         App\Providers\HelperServiceProvider::class,
     ],
 
@@ -233,16 +235,24 @@ return [
 
     ],
 
-    // Custom Config
+    /*
+     * CUSTOM CONFIGURATION
+     * ----------------------------------------------------------
+     * Finnhub configuration
+     */
     'finnhub' => [
-        'url' => env('FINNHUB_URL'),
-        'api_key' => env('FINNHUB_KEY')
+        'url' => env('FINNHUB_URL', 'FINNHUB_URL'), // base url of REST API Finhub
+        'api_key' => env('FINNHUB_KEY', 'FINNHUB_API_KEY') // Finnhub REST API KEY
     ],
-
+    /*
+     * Coin Market Cap configuration
+     */
     'coinmarketcap' => [
-        'url' => env('COINMARKETCAP_URL'),
-        'api_key' => env('COINMARKETCAP_KEY')
+        'url' => env('COINMARKETCAP_URL'), // base url of REST API Coin Market Cap
+        'api_key' => env('COINMARKETCAP_KEY') // Coin market cap REST API KEY
     ],
-
+    /*
+     * Admin email that is listen to
+     */
     'admin_email' => env('ADMIN_EMAIL', 'admin@gmail.com')
 ];

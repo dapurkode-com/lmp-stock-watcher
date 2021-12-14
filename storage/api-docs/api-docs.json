@@ -1,0 +1,1830 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LMP Stock Watcher API Documentations",
+        "contact": {
+            "email": "i.g.b.n.satyawibawa@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://warulaga.dapurkode.com",
+            "description": "Dapurkode API Server"
+        },
+        {
+            "url": "http://localhost:8000",
+            "description": "Local Testing Server"
+        }
+    ],
+    "paths": {
+        "/api/watchlist/commodities": {
+            "get": {
+                "tags": [
+                    "Watchlist Commodity Controller",
+                    "Watchlist Index"
+                ],
+                "summary": "Collection of watchlist commodities raw data",
+                "operationId": "watchlistCommoditiesIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of commodities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "commodities": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Gold"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "26136251"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "25666841"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "239983"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "0.94"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/watchlist/get-resource-commodity": {
+            "get": {
+                "tags": [
+                    "Watchlist Commodity Controller",
+                    "Watchlist Get Resource"
+                ],
+                "summary": "Commodities that avaiable to add on watchlist",
+                "operationId": "watchlistCommoditiesGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of commodities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "commodityResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Gold"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/store-commodity": {
+            "post": {
+                "tags": [
+                    "Watchlist Commodity Controller",
+                    "Watchlist Store"
+                ],
+                "summary": "Add commodity to watchlist",
+                "operationId": "watchlistCommoditiesStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/remove-commodity": {
+            "post": {
+                "tags": [
+                    "Watchlist Commodity Controller",
+                    "Watchlist Remove"
+                ],
+                "summary": "Remove commodity from watchlist",
+                "operationId": "watchlistCommoditiesRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/cryptos": {
+            "get": {
+                "tags": [
+                    "Watchlist Crypto Controller",
+                    "Watchlist Index"
+                ],
+                "summary": "Collection of watchlist cryptos raw data",
+                "operationId": "watchlistCryptoIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of cryptos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "cryptos": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "26136251"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "25666841"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "239983"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "0.94"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/watchlist/get-resource-crypto": {
+            "get": {
+                "tags": [
+                    "Watchlist Crypto Controller",
+                    "Watchlist Get Resource"
+                ],
+                "summary": "Cryptocurrencies that avaiable to add on watchlist",
+                "operationId": "watchlistCryptoGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of cryptoResources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "cryptoResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/store-crypto": {
+            "post": {
+                "tags": [
+                    "Watchlist Crypto Controller",
+                    "Watchlist Store"
+                ],
+                "summary": "Add cryptocurrency to watchlist",
+                "operationId": "watchlistCryptoStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/remove-crypto": {
+            "post": {
+                "tags": [
+                    "Watchlist Crypto Controller",
+                    "Watchlist Remove"
+                ],
+                "summary": "Remove crypto from watchlist",
+                "operationId": "watchlistCryptoRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/commodities": {
+            "get": {
+                "tags": [
+                    "Holdlist Commodity Controller",
+                    "Holdlist Index"
+                ],
+                "summary": "Collection of holdlist commodities raw data",
+                "operationId": "holdlistCommodityIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of commodities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stocks": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "26136251"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "25666841"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "239983"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "0.94"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    },
+                                                    "amount": {
+                                                        "description": "Amount of hold stock",
+                                                        "type": "number",
+                                                        "example": "5"
+                                                    },
+                                                    "unit": {
+                                                        "description": "Multiplier of stock and unit",
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wallet/get-resource-commodity": {
+            "get": {
+                "tags": [
+                    "Holdlist Commodity Controller",
+                    "Holdlist Get Resource"
+                ],
+                "summary": "Commodities that avaiable to add on holdlist",
+                "operationId": "holdlistCommoditiesGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of commodities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "commodityResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Gold"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/wallet/store-commodity": {
+            "post": {
+                "tags": [
+                    "Holdlist Commodity Controller",
+                    "Holdlist Store"
+                ],
+                "summary": "Add commodity to holdlist",
+                "operationId": "holdlistCommoditiesStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "amount": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/remove-commodity": {
+            "post": {
+                "tags": [
+                    "Holdlist Commodity Controller",
+                    "Holdlist Remove"
+                ],
+                "summary": "Remove commodity from holdlist",
+                "operationId": "holdlistCommoditiesRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/cryptos": {
+            "get": {
+                "tags": [
+                    "Holdlist Crypto Controller",
+                    "Holdlist Index"
+                ],
+                "summary": "Collection of holdlist cryptos raw data",
+                "operationId": "holdlistCryptoIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of cryptos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "cryptos": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "26136251"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "25666841"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "239983"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "0.94"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    },
+                                                    "amount": {
+                                                        "description": "Amount of hold stock",
+                                                        "type": "number",
+                                                        "example": "0.2"
+                                                    },
+                                                    "unit": {
+                                                        "description": "Multiplier of stock and unit",
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wallet/get-resource-crypto": {
+            "get": {
+                "tags": [
+                    "Holdlist Crypto Controller",
+                    "Holdlist Get Resource"
+                ],
+                "summary": "Cryptocurrencies that avaiable to add on holdlist",
+                "operationId": "holdlistCryptoGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of cryptoResources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "cryptoResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/wallet/store-crypto": {
+            "post": {
+                "tags": [
+                    "Holdlist Crypto Controller",
+                    "Holdlist Store"
+                ],
+                "summary": "Add cryptocurrency to holdlist",
+                "operationId": "holdlistCryptoStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "amount": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/remove-crypto": {
+            "post": {
+                "tags": [
+                    "Holdlist Crypto Controller",
+                    "Holdlist Remove"
+                ],
+                "summary": "Remove crypto from holdlist",
+                "operationId": "holdlistCryptoRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/idx-stocks": {
+            "get": {
+                "tags": [
+                    "Holdlist Idx Controller",
+                    "Holdlist Index"
+                ],
+                "summary": "Collection of holdlist idx stocks raw data",
+                "operationId": "holdlistIdxIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of idx stocks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stocks": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "BBRI"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Bank Rakyat Indonesia"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "3200"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "3400"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "200"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "8.1"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    },
+                                                    "amount": {
+                                                        "description": "Amount of hold stock",
+                                                        "type": "number",
+                                                        "example": "8"
+                                                    },
+                                                    "unit": {
+                                                        "description": "Multiplier of stock and unit",
+                                                        "type": "number",
+                                                        "example": "100"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wallet/get-resource-idx-stock": {
+            "get": {
+                "tags": [
+                    "Holdlist Idx Controller",
+                    "Holdlist Get Resource"
+                ],
+                "summary": "Idx stocks that avaiable to add on holdlist",
+                "operationId": "holdlistIdxGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of stockResources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stockResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/wallet/store-idx-stock": {
+            "post": {
+                "tags": [
+                    "Holdlist Idx Controller",
+                    "Holdlist Store"
+                ],
+                "summary": "Add idx stock to holdlist",
+                "operationId": "holdlistIdxStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "amount": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/remove-idx-stock": {
+            "post": {
+                "tags": [
+                    "Holdlist Idx Controller",
+                    "Holdlist Remove"
+                ],
+                "summary": "Remove idx stock from holdlist",
+                "operationId": "holdlistIdxRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/us-stocks": {
+            "get": {
+                "tags": [
+                    "Holdlist Us Controller",
+                    "Holdlist Index"
+                ],
+                "summary": "Collection of holdlist us stocks raw data",
+                "operationId": "holdlistUsIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of us stocks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stocks": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "26136251"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "25666841"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "239983"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "0.94"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    },
+                                                    "amount": {
+                                                        "description": "Amount of hold stock",
+                                                        "type": "number",
+                                                        "example": "2"
+                                                    },
+                                                    "unit": {
+                                                        "description": "Multiplier of stock and unit",
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wallet/get-resource-us-stock": {
+            "get": {
+                "tags": [
+                    "Holdlist Us Controller",
+                    "Holdlist Get Resource"
+                ],
+                "summary": "Us stocks that avaiable to add on holdlist",
+                "operationId": "holdlistUsGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of stockResources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stockResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/wallet/store-us-stock": {
+            "post": {
+                "tags": [
+                    "Holdlist Us Controller",
+                    "Holdlist Store"
+                ],
+                "summary": "Add us stock to holdlist",
+                "operationId": "holdlistUsStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "symbol": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/wallet/remove-us-stock": {
+            "post": {
+                "tags": [
+                    "Holdlist Us Controller",
+                    "Holdlist Remove"
+                ],
+                "summary": "Remove us stock from holdlist",
+                "operationId": "holdlistUsRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/idx-stocks": {
+            "get": {
+                "tags": [
+                    "Watchlist Idx Controller",
+                    "Watchlist Index"
+                ],
+                "summary": "Collection of watchlist idx stocks raw data",
+                "operationId": "watchlistIdxIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of idx stocks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stocks": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "26136251"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "25666841"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "239983"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "0.94"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/watchlist/get-resource-idx-stock": {
+            "get": {
+                "tags": [
+                    "Watchlist Idx Controller",
+                    "Watchlist Get Resource"
+                ],
+                "summary": "Idx stocks that avaiable to add on watchlist",
+                "operationId": "watchlistIdxGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of stockResources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stockResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/store-idx-stock": {
+            "post": {
+                "tags": [
+                    "Watchlist Idx Controller",
+                    "Watchlist Store"
+                ],
+                "summary": "Add idx stock to watchlist",
+                "operationId": "watchlistIdxStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/remove-idx-stock": {
+            "post": {
+                "tags": [
+                    "Watchlist Idx Controller",
+                    "Watchlist Remove"
+                ],
+                "summary": "Remove idx stock from watchlist",
+                "operationId": "watchlistIdxRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/us-stocks": {
+            "get": {
+                "tags": [
+                    "Watchlist Us Controller",
+                    "Watchlist Index"
+                ],
+                "summary": "Collection of watchlist us stocks raw data",
+                "operationId": "watchlistUsIndex",
+                "responses": {
+                    "200": {
+                        "description": "Collections of us stocks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stocks": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    },
+                                                    "prev_day_close_price": {
+                                                        "description": "Previous close day price",
+                                                        "type": "number",
+                                                        "example": "26136251"
+                                                    },
+                                                    "current_price": {
+                                                        "description": "Current price",
+                                                        "type": "number",
+                                                        "example": "25666841"
+                                                    },
+                                                    "change": {
+                                                        "description": "Deviation between current and previous close day price",
+                                                        "type": "number",
+                                                        "example": "239983"
+                                                    },
+                                                    "percent_change": {
+                                                        "description": "Deviation in percent",
+                                                        "type": "number",
+                                                        "example": "0.94"
+                                                    },
+                                                    "last_updated": {
+                                                        "description": "Last data updated",
+                                                        "type": "date",
+                                                        "example": "2020-12-10 10:10:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/watchlist/get-resource-us-stock": {
+            "get": {
+                "tags": [
+                    "Watchlist Us Controller",
+                    "Watchlist Get Resource"
+                ],
+                "summary": "Us stocks that avaiable to add on watchlist",
+                "operationId": "watchlistUsGetResource",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching keyword",
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collections of stockResources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "stockResources": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Id of collection",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "symbol": {
+                                                        "description": "Symbol of stock",
+                                                        "type": "string",
+                                                        "example": "TSLA"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of stock",
+                                                        "type": "string",
+                                                        "example": "Tesla Inc"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/store-us-stock": {
+            "post": {
+                "tags": [
+                    "Watchlist Us Controller",
+                    "Watchlist Store"
+                ],
+                "summary": "Add us stock to watchlist",
+                "operationId": "watchlistUsStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "symbol": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        },
+        "/api/watchlist/remove-us-stock": {
+            "post": {
+                "tags": [
+                    "Watchlist Us Controller",
+                    "Watchlist Remove"
+                ],
+                "summary": "Remove us stock from watchlist",
+                "operationId": "watchlistUsRemove",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Error"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Watchlist Commodity Controller"
+        },
+        {
+            "name": "Watchlist Crypto Controller"
+        },
+        {
+            "name": "Holdlist Commodity Controller"
+        },
+        {
+            "name": "Holdlist Crypto Controller"
+        },
+        {
+            "name": "Holdlist Idx Controller"
+        },
+        {
+            "name": "Holdlist Us Controller"
+        },
+        {
+            "name": "Watchlist Idx Controller"
+        },
+        {
+            "name": "Watchlist Us Controller"
+        }
+    ],
+    "security": [
+        []
+    ]
+}

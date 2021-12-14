@@ -5,6 +5,12 @@ namespace App\Helpers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ * FinnhubHelper is a helper class for request Finnhub
+ *
+ * @package App\Helpers
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ */
 class FinnhubHelper
 {
     /**

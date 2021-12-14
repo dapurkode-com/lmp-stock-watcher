@@ -7,6 +7,14 @@ use Carbon\Carbon;
 use Goutte\Client;
 use Illuminate\Console\Command;
 
+/**
+ * ScrapIdx is a command class that used to
+ * gathering Indonesian Stock price data from scraping Idx Channel site
+ *
+ * @package Commands
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ *
+ */
 class ScrapIdx extends Command
 {
     /**

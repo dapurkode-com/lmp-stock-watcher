@@ -10,6 +10,14 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
 
+/**
+ * GetUsStockUpdate is a command class that used to
+ * gathering US Stock price data from Finnhub API
+ *
+ * @package Commands
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ *
+ */
 class GetUsStockUpdate extends Command
 {
     /**

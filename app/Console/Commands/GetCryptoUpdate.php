@@ -11,6 +11,14 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 
+/**
+ * GetCryptoUpdate is a command class that used to
+ * gathering cryptocurrency price from Coin Market Cap API
+ *
+ * @package Commands
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ *
+ */
 class GetCryptoUpdate extends Command
 {
     /**
@@ -50,6 +58,7 @@ class GetCryptoUpdate extends Command
             $data_get = 1;
 
             do {
+                //Request up to 4000 rows data per call request to avoid RTO
                 $content = CoinMarketCapHelper::request('GET', 'cryptocurrency/listings/latest', [
                     'limit' => 4000,
                     'aux' => "tags",
@@ -62,6 +71,7 @@ class GetCryptoUpdate extends Command
                 $this->info("all_data : $all_data");
                 $this->info("data_get : $data_get");
 
+                // Update data on database
                 foreach ($content['data'] as $data) {
                     WatchlistStockCrypto::updateOrCreate(
                         ['symbol' => $data['symbol'], 'name' => $data['name']],

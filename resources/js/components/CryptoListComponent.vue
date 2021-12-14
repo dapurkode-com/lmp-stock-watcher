@@ -122,7 +122,7 @@ export default {
         fetchStocks() {
             this.isCardBusy = true
             axios.get('/api/watchlist/cryptos').then((response) => {
-                this.cryptos = response.data.data;
+                this.cryptos = response.data.cryptos;
                 this.isCardBusy = false
             })
         },

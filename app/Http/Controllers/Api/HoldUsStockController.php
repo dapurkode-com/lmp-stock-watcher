@@ -15,6 +15,12 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @package App\Http\Controllers\Api
+ * @author Satya Wibawa <i.g.b.n.satyawibawa@gmail.com>
+ *
+ * @OA\Tag(name="Holdlist Us Controller")
+ */
 class HoldUsStockController extends Controller
 {
     const HOLDABLE_TYPE = "us-stock";
@@ -26,6 +32,33 @@ class HoldUsStockController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/wallet/us-stocks",
+     *      tags={"Holdlist Us Controller", "Holdlist Index"},
+     *      summary="Collection of holdlist us stocks raw data",
+     *      operationId="holdlistUsIndex",
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Collections of us stocks",
+     *          @OA\JsonContent(
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="array", property="stocks", @OA\Items(
+     *                  @OA\Property(property="id", type="integer", description="Id of collection", example=1),
+     *                  @OA\Property(property="symbol", type="string", description="Symbol of stock", example="TSLA"),
+     *                  @OA\Property(property="name", type="string", description="Name of stock", example="Tesla Inc"),
+     *                  @OA\Property(property="prev_day_close_price", type="number", description="Previous close day price", example="26136251"),
+     *                  @OA\Property(property="current_price", type="number", description="Current price", example="25666841"),
+     *                  @OA\Property(property="change", type="number", description="Deviation between current and previous close day price", example="239983"),
+     *                  @OA\Property(property="percent_change", type="number", description="Deviation in percent", example="0.94"),
+     *                  @OA\Property(property="last_updated", type="date", description="Last data updated", example="2020-12-10 10:10:00"),
+     *                  @OA\Property(property="amount", type="number", description="Amount of hold stock", example="2"),
+     *                  @OA\Property(property="unit", type="number", description="Multiplier of stock and unit", example="1"),
+     *              )),
+     *          )
+     *      ),
+     * )
+     *
      * @return JsonResponse
      */
     public function index(): JsonResponse
@@ -42,6 +75,40 @@ class HoldUsStockController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/wallet/get-resource-us-stock",
+     *      tags={"Holdlist Us Controller", "Holdlist Get Resource"},
+     *      summary="Us stocks that avaiable to add on holdlist",
+     *      operationId="holdlistUsGetResource",
+     *
+     *      @OA\Parameter(
+     *          name="query",
+     *          in="query",
+     *          description="Searching keyword",
+     *          allowEmptyValue=true,
+     *          @OA\Schema(
+     *              type="string"
+     *         )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Collections of stockResources",
+     *          @OA\JsonContent(
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="array", property="stockResources", @OA\Items(
+     *                  @OA\Property(property="id", type="integer", description="Id of collection", example=1),
+     *                  @OA\Property(property="symbol", type="string", description="Symbol of stock", example="TSLA"),
+     *                  @OA\Property(property="name", type="string", description="Name of stock", example="Tesla Inc"),
+     *              )),
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorize"
+     *      )
+     * )
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -85,6 +152,37 @@ class HoldUsStockController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/wallet/store-us-stock",
+     *      tags={"Holdlist Us Controller", "Holdlist Store"},
+     *      summary="Add us stock to holdlist",
+     *      operationId="holdlistUsStore",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(type="string", property="symbol"),
+     *              @OA\Property(type="string", property="name"),
+     *              @OA\Property(type="number", property="amount"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error"
+     *      ),
+     * )
+     *
      * @param SymbolHoldRequest $request
      * @return JsonResponse
      */
@@ -106,6 +204,33 @@ class HoldUsStockController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/wallet/remove-us-stock",
+     *      tags={"Holdlist Us Controller", "Holdlist Remove"},
+     *      summary="Remove us stock from holdlist",
+     *      operationId="holdlistUsRemove",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(@OA\Property(type="number", property="id"))
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error"
+     *      ),
+     * )
+     *
      * @param SymbolRequest $request
      * @return JsonResponse
      */

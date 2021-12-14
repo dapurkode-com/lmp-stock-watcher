@@ -24,7 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // remove json resource warping
+        // doc : https://laravel.com/docs/8.x/eloquent-resources#data-wrapping
         JsonResource::withoutWrapping();
+
+        // PHPStorm IDE helper for local
         if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
