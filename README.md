@@ -82,7 +82,7 @@ Setelah anda memastikan pengaturan basis data di _file .env_ telah sesuai, jalan
 
 ## Dokumentasi
 
-Dokumentasi dari REST API aplikasi dapat dilihat pada halaman `/api/docs` setelah menjalankan aplikasi.
+Dokumentasi dari REST API aplikasi dapat dilihat pada halaman [/api/docs](https://dapurkode-com.github.io/lmp-stock-watcher/docs/) setelah menjalankan aplikasi.
 
 ## ER Diagram
 
