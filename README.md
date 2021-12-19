@@ -88,7 +88,7 @@ Dokumentasi dari REST API aplikasi dapat dilihat pada halaman `/api/docs` setela
 
 Untuk menjalankan fungsinya, aplikasi LMP Stock Watcher membutuhkan media penyimpanan data yang disebut dengan basis data.  Basis data dari aplikasi LMP Stock Watcher menggunakan basis data MySQL dengan _engine InnoDB_. Struktur dari basis data dari aplikasi LMP Stock Watcher dapat ditunjukan sebagai berikut.
 
-![ER Diagaram](documentation/ER.png)
+![ER Diagaram](docs/images/ER.png)
 
 Terdapat 8 tabel yang ada pada basis data LMP Stock Watcher. Tabel _users_ menyimpan data _admin_ yang nantinya bisa mengganti aset yang dipantau dan juga disimpan. Tabel _sessions_ adalah tabel yang berfungsi menyimpan data saat _admin_ masuk ke dalam aplikasi. Tabel _holdables_ menyimpan daftar aset yang dimiliki, sedangkan tabel _watchables_ menyimpan daftar aset yang dipantau. Tabel _watchlist_stock_commodities_, _watclist_stock_us_, _watchlist_stock_idxes_, _watchlist_stock_cryptos_ masing-masing menyimpan data harga komoditas, saham US, saham saham Indonesia serta harga mata uang krypto.
 
