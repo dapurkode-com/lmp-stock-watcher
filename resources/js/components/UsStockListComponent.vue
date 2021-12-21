@@ -17,24 +17,24 @@
                         <b-table :fields="stockFields" :items="stocks" show-empty>
                             <template #cell(prev_day_close_price)="data">
                                 {{
-                                    data.item.prev_day_close_price != null ? Number(data.item.prev_day_close_price).toLocaleString() : '-'
+                                    data.item.prev_day_close_price != null ? Math(Number(data.item.prev_day_close_price)).toLocaleString() : '-'
                                 }}
                             </template>
                             <template #cell(current_price)="data">
-                                {{ data.item.current_price ? Number(data.item.current_price).toLocaleString() : '-' }}
+                                {{ data.item.current_price ? Math(Number(data.item.current_price)).toLocaleString() : '-' }}
                             </template>
                             <template #cell(change)="data">
                                 <span
                                     :class="{'badge-success' : data.item.change > 0, 'badge-danger' : data.item.change < 0}"
                                     class="badge">{{
-                                        data.item.change != null ? Number(data.item.change).toLocaleString() : '-'
+                                        data.item.change != null ? Math(Number(data.item.change)).toLocaleString() : '-'
                                     }}</span>
                             </template>
                             <template #cell(percent_change)="data">
                                 <span
                                     :class="{'badge-success' : data.item.percent_change > 0, 'badge-danger' : data.item.percent_change < 0}"
                                     class="badge">{{
-                                        data.item.percent_change != null ? Number(data.item.percent_change).toLocaleString() : '-'
+                                        data.item.percent_change != null ? Math(Number(data.item.percent_change)).toLocaleString() : '-'
                                     }}</span>
                             </template>
                             <template #cell(actions)="row">

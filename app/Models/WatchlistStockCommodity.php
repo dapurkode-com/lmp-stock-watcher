@@ -49,7 +49,7 @@ class WatchlistStockCommodity extends Model
      */
     protected $fillable = [
         'name',
-        'prev_price',
+        'prev_day_close_price',
         'current_price',
         'change',
         'percent_change',

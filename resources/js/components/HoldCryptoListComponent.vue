@@ -1,14 +1,14 @@
 <template>
     <div class="container-fluid px-5">
         <div class="row">
-            <div class="col-xl-3 d-none d-xl-inline">
-                <b-card title="Summary">
-                    <b-card-body>
-                        <doughnut-chart :chart-data="dataSet"></doughnut-chart>
-                    </b-card-body>
-                </b-card>
-            </div>
-            <div class="col-sm-12 col-xl-9">
+<!--            <div class="col-xl-3 d-none d-xl-inline">-->
+<!--                <b-card title="Summary">-->
+<!--                    <b-card-body>-->
+<!--                        <doughnut-chart :chart-data="dataSet"></doughnut-chart>-->
+<!--                    </b-card-body>-->
+<!--                </b-card>-->
+<!--            </div>-->
+            <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -24,24 +24,24 @@
                         <b-table :fields="cryptoFields" :items="cryptos" show-empty>
                             <template #cell(prev_day_close_price)="data">
                                 {{
-                                    data.item.prev_day_close_price != null ? Number(data.item.prev_day_close_price).toLocaleString() : '-'
+                                    data.item.prev_day_close_price != null ? Math.round(Number(data.item.prev_day_close_price)).toLocaleString() : '-'
                                 }}
                             </template>
                             <template #cell(current_price)="data">
                                 {{
-                                    data.item.current_price != null ? Number(data.item.current_price).toLocaleString() : '-'
+                                    data.item.current_price != null ? Math.round(Number(data.item.current_price)).toLocaleString() : '-'
                                 }}
                             </template>
                             <template #cell(percent_change)="data">
                                 <span
                                     :class="{'badge-success' : data.item.percent_change > 0, 'badge-danger' : data.item.percent_change < 0}"
                                     class="badge">{{
-                                        data.item.percent_change != null ? Number(data.item.percent_change).toLocaleString() : '-'
+                                        data.item.percent_change != null ? Math.round(Number(data.item.percent_change)).toLocaleString() : '-'
                                     }}</span>
                             </template>
                             <template #cell(hold_price)="data">
                                 {{
-                                    data.item.amount != null ? Number((data.item.amount * data.item.unit * data.item.current_price)).toLocaleString() : '-'
+                                    data.item.amount != null ? Math.round(Number(data.item.amount * data.item.unit * data.item.current_price)).toLocaleString() : '-'
                                 }}
                             </template>
                             <template #cell(actions)="row">

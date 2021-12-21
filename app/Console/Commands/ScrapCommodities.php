@@ -63,12 +63,13 @@ class ScrapCommodities extends Command
 
         $crawler->filterXPath("//table[2]/tbody/tr")->each(function ($row) use ($now, $rate) {
 
-            $current_price = NumberUtilHelper::rounding(RateHelper::calcWithRate($rate, $row->filter('td')->eq(1)->text()) / 31.1) ; // convert troy per ounce to gram
-            $change = NumberUtilHelper::rounding(RateHelper::calcWithRate($rate, $row->filter('td')->eq(3)->text()) / 31.1); // convert troy per ounce to gram
+            $current_price = NumberUtilHelper::rounding((RateHelper::calcWithRate($rate, $row->filter('td')->eq(1)->text()) / 31.1)) ; // convert troy per ounce to gram
+            $change = NumberUtilHelper::rounding((RateHelper::calcWithRate($rate, $row->filter('td')->eq(3)->text()) / 31.1)); // convert troy per ounce to gram
+
             WatchlistStockCommodity::updateOrCreate([
                 'name' => $row->filter('td')->eq(0)->text()
             ], [
-                'prev_day_close_price' => $current_price - $change, // get prev price from current minus change
+                'prev_day_close_price' => ($current_price - $change), // get prev price from current minus change
                 'current_price' => $current_price,
                 'change' => $change,
                 'percent_change' => NumberUtilHelper::floatValue(rtrim($row->filter('td')->eq(2)->text(), '%')),
